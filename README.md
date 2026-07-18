@@ -2,6 +2,8 @@
 
 **Compiled July 18, 2026** · Futures for the 2026 NFL season (Super Bowl LXI, SoFi Stadium, February 2027)
 
+📅 **Looking for game-by-game picks instead of futures?** See [Week 1 best bets](week1-2026-best-bets.md).
+
 > ⚠️ **Read first:** Odds below were sourced and cross-checked from public odds trackers and sportsbook content dated June–July 2026. Futures prices move constantly — **re-verify every line at your book before betting.** Nothing here is a guarantee; these are value arguments, not predictions. Bet only what you can afford to lose. If gambling stops being fun, call or text 1-800-GAMBLER.
 
 ---
