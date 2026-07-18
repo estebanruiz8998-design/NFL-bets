@@ -1,22 +1,13 @@
 <title>NFL Bets — 2026 Season Desk</title>
 <style>
   :root {
-    --bg: #F5F6F2;
-    --surface: #FFFFFF;
-    --surface2: #EDEFE9;
-    --ink: #171B18;
-    --ink2: #4A524C;
-    --ink3: #7A837C;
-    --line: #DDE1DA;
-    --accent: #1F7A4D;
-    --accent-soft: #E2F0E8;
-    --lean: #9A6A1F;
-    --lean-soft: #F4EAD6;
-    --pass: #7A837C;
-    --pass-soft: #ECEEE9;
-    --neg: #C4554D;
-    --posbar: #4077B8;
-    --negbar: #C4554D;
+    --bg: #F5F6F2; --surface: #FFFFFF; --surface2: #EDEFE9;
+    --ink: #171B18; --ink2: #4A524C; --ink3: #7A837C; --line: #DDE1DA;
+    --accent: #1F7A4D; --accent-soft: #E2F0E8;
+    --lean: #9A6A1F; --lean-soft: #F4EAD6;
+    --pass: #7A837C; --pass-soft: #ECEEE9;
+    --neg: #C4554D; --neg-soft: #F6E4E2;
+    --posbar: #4077B8; --negbar: #C4554D;
     --chip-ink: #FFFFFF;
     --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
     --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -28,7 +19,8 @@
       --accent: #3FAE76; --accent-soft: #1B3226;
       --lean: #D2A24C; --lean-soft: #33290F;
       --pass: #8A948C; --pass-soft: #222B25;
-      --neg: #D06A5F; --posbar: #5089C6; --negbar: #C6584E;
+      --neg: #D06A5F; --neg-soft: #38201D;
+      --posbar: #5089C6; --negbar: #C6584E;
       --chip-ink: #0E1411;
     }
   }
@@ -38,7 +30,8 @@
     --accent: #3FAE76; --accent-soft: #1B3226;
     --lean: #D2A24C; --lean-soft: #33290F;
     --pass: #8A948C; --pass-soft: #222B25;
-    --neg: #D06A5F; --posbar: #5089C6; --negbar: #C6584E;
+    --neg: #D06A5F; --neg-soft: #38201D;
+    --posbar: #5089C6; --negbar: #C6584E;
     --chip-ink: #0E1411;
   }
   :root[data-theme="light"] {
@@ -47,76 +40,118 @@
     --accent: #1F7A4D; --accent-soft: #E2F0E8;
     --lean: #9A6A1F; --lean-soft: #F4EAD6;
     --pass: #7A837C; --pass-soft: #ECEEE9;
-    --neg: #C4554D; --posbar: #4077B8; --negbar: #C4554D;
+    --neg: #C4554D; --neg-soft: #F6E4E2;
+    --posbar: #4077B8; --negbar: #C4554D;
     --chip-ink: #FFFFFF;
   }
   * { box-sizing: border-box; }
-  body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font-family: var(--sans); font-size: 15px; line-height: 1.5;
-  }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 64px; }
 
-  header.top {
-    position: sticky; top: 0; z-index: 20; background: var(--bg);
-    border-bottom: 1px solid var(--line);
-  }
-  .top-inner {
-    max-width: 1080px; margin: 0 auto; padding: 14px 20px 0;
-    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px;
-  }
+  header.top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .top-inner { max-width: 1080px; margin: 0 auto; padding: 14px 20px 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
   .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 19px; }
   .brand .yr { color: var(--accent); }
   .countdown { font-family: var(--mono); font-size: 12.5px; color: var(--ink2); margin-left: auto; }
   .countdown b { color: var(--ink); font-variant-numeric: tabular-nums; }
   nav.tabs { max-width: 1080px; margin: 0 auto; padding: 8px 20px 0; display: flex; gap: 2px; overflow-x: auto; }
-  nav.tabs button {
-    appearance: none; border: 0; background: none; color: var(--ink2);
-    font: 600 13.5px var(--sans); padding: 8px 14px 10px; cursor: pointer;
-    border-bottom: 2px solid transparent; white-space: nowrap;
-  }
+  nav.tabs button { appearance: none; border: 0; background: none; color: var(--ink2); font: 600 13.5px var(--sans); padding: 8px 14px 10px; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
   nav.tabs button:hover { color: var(--ink); }
   nav.tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 4px; }
   nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 
   section.panel { display: none; padding-top: 24px; }
   section.panel.active { display: block; }
-
   .eyebrow { font: 600 11px var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin: 0 0 6px; }
   h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px; text-wrap: balance; }
   .sub { color: var(--ink2); margin: 0 0 20px; max-width: 68ch; }
   a { color: var(--accent); }
 
+  /* ---- verdict ---- */
+  .v-hero { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px 28px; margin-bottom: 18px; }
+  .v-hero .q { font: 600 12px var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); }
+  .v-hero .a { font-size: 30px; font-weight: 800; letter-spacing: -0.025em; margin: 6px 0 10px; text-wrap: balance; }
+  .v-hero .a em { font-style: normal; color: var(--neg); }
+  .v-hero p { margin: 0; color: var(--ink2); max-width: 78ch; }
+  .v-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 10px; margin-bottom: 22px; }
+  .v-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .v-card .head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .v-card h3 { margin: 0; font-size: 14px; font-weight: 750; }
+  .v-card .stat { font: 500 12.5px var(--mono); color: var(--ink2); font-variant-numeric: tabular-nums; }
+  .badge { font: 700 10px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .badge.noedge, .badge.nosupport { background: var(--neg-soft); color: var(--neg); }
+  .badge.insufficient { background: var(--lean-soft); color: var(--lean); }
+  .badge.untestable, .badge.efficient { background: var(--pass-soft); color: var(--pass); }
+
+  .callout { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); border-radius: 10px; padding: 16px 18px; margin: 0 0 20px; max-width: 84ch; }
+  .callout.warn { border-left-color: var(--lean); }
+  .callout.bad { border-left-color: var(--neg); }
+  .callout h3 { margin: 0 0 6px; font-size: 15px; }
+  .callout p { margin: 0; color: var(--ink2); font-size: 14px; }
+
+  table.data { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  .table-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 22px; }
+  table.data th, table.data td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+  table.data tr:last-child td { border-bottom: 0; }
+  table.data th { font: 600 11px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); }
+  table.data td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  table.data td .negv { color: var(--negbar); font-weight: 650; }
+  table.data td .posv { color: var(--posbar); font-weight: 650; }
+
+  .chart { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px 12px; margin-bottom: 22px; }
+  .chart h3 { margin: 0 0 2px; font-size: 15px; }
+  .chart .note { font-size: 12.5px; color: var(--ink3); margin: 0 0 14px; }
+  .roi-grid { display: flex; gap: 10px; align-items: stretch; height: 200px; }
+  .roi-col { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+  .roi-plot { position: relative; width: 100%; flex: 1; }
+  .roi-plot .zero { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); }
+  .roi-bar { position: absolute; left: 50%; transform: translateX(-50%); width: 26px; max-width: 60%; border-radius: 4px; }
+  .roi-bar.up { background: var(--posbar); bottom: 50%; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .roi-bar.down { background: var(--negbar); top: 50%; border-top-left-radius: 0; border-top-right-radius: 0; }
+  .roi-lab { position: absolute; left: 50%; transform: translateX(-50%); font: 600 11px var(--mono); color: var(--ink2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .roi-x { font: 600 11px var(--mono); color: var(--ink3); margin-top: 6px; text-align: center; line-height: 1.3; }
+  .roi-x small { display: block; font-weight: 500; }
+
+  .elo-list { display: flex; flex-direction: column; gap: 7px; }
+  .elo-row { display: grid; grid-template-columns: 34px 44px 1fr 52px; align-items: center; gap: 10px; }
+  .elo-rank { font: 600 11px var(--mono); color: var(--ink3); }
+  .elo-team { font: 700 13px var(--mono); }
+  .elo-track { height: 10px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .elo-fill { height: 100%; background: var(--accent); border-radius: 4px; }
+  .elo-val { font: 600 12px var(--mono); color: var(--ink2); text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* ---- slip ---- */
+  .slip-h { font-size: 14px; font-weight: 750; margin: 22px 0 10px; }
+  .slip-h:first-of-type { margin-top: 4px; }
+  .slip-note { font-weight: 500; color: var(--ink3); font-size: 12.5px; }
+  .slip-list { display: flex; flex-direction: column; gap: 8px; }
+  .slip-row { display: grid; grid-template-columns: minmax(190px, 1.4fr) minmax(130px, 1fr) 64px 1fr; gap: 8px 16px; align-items: baseline; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+  .slip-bet { font: 700 14px var(--mono); }
+  .slip-price { font: 600 12.5px var(--mono); color: var(--accent); }
+  .slip-price small { color: var(--ink3); font-weight: 500; }
+  .slip-units { font: 700 13px var(--mono); white-space: nowrap; }
+  .slip-why { font-size: 12.5px; color: var(--ink3); }
+  .slip-why b { color: var(--neg); font-weight: 650; }
+  @media (max-width: 760px) { .slip-row { grid-template-columns: 1fr auto; } .slip-why { grid-column: 1 / -1; } }
+
+  /* ---- board ---- */
   .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 22px; }
   .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
   .stat .k { font: 600 11px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); }
   .stat .v { font: 700 22px/1.2 var(--mono); font-variant-numeric: tabular-nums; margin-top: 2px; }
   .stat .v small { font-size: 12px; font-weight: 500; color: var(--ink2); }
-
   .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
   .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .chip {
-    appearance: none; border: 1px solid var(--line); background: var(--surface);
-    color: var(--ink2); font: 600 12.5px var(--mono); padding: 5px 11px;
-    border-radius: 999px; cursor: pointer;
-  }
+  .chip { appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink2); font: 600 12.5px var(--mono); padding: 5px 11px; border-radius: 999px; cursor: pointer; }
   .chip:hover { color: var(--ink); }
   .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
   .chip.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-  .filters select, .filters input[type="search"] {
-    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
-    font: 500 13px var(--sans); padding: 6px 10px; border-radius: 8px;
-  }
+  .filters select, .filters input[type="search"] { border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 13px var(--sans); padding: 6px 10px; border-radius: 8px; }
   .filters input[type="search"] { width: 130px; }
   .filters .spacer { margin-left: auto; }
-
   .board { display: flex; flex-direction: column; gap: 8px; }
   .game { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-  .game > button.row {
-    all: unset; display: grid; width: 100%; cursor: pointer;
-    grid-template-columns: 92px 1fr 150px 150px 96px minmax(150px, 190px);
-    gap: 12px; align-items: center; padding: 11px 14px; box-sizing: border-box;
-  }
+  .game > button.row { all: unset; display: grid; width: 100%; cursor: pointer; grid-template-columns: 92px 1fr 150px 150px 96px minmax(150px, 190px); gap: 12px; align-items: center; padding: 11px 14px; box-sizing: border-box; }
   .game > button.row:hover { background: var(--surface2); }
   .game > button.row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
   .g-date { font: 500 12px var(--mono); color: var(--ink3); }
@@ -133,10 +168,7 @@
   .edge-val { font: 600 11px var(--mono); color: var(--ink3); font-variant-numeric: tabular-nums; }
   .g-bet { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
   .bet-label { font: 700 13.5px var(--mono); }
-  .pill {
-    font: 700 10.5px var(--sans); letter-spacing: 0.08em; padding: 3px 9px;
-    border-radius: 999px; text-transform: uppercase;
-  }
+  .pill { font: 700 10.5px var(--sans); letter-spacing: 0.08em; padding: 3px 9px; border-radius: 999px; text-transform: uppercase; }
   .pill.STRONG { background: var(--accent); color: var(--chip-ink); }
   .pill.LEAN { background: var(--lean-soft); color: var(--lean); }
   .pill.PASS { background: var(--pass-soft); color: var(--pass); }
@@ -147,91 +179,7 @@
   .detail dd { margin: 0; font: 600 14px var(--mono); font-variant-numeric: tabular-nums; }
   .detail p { margin: 6px 0 0; color: var(--ink2); font-size: 13.5px; max-width: 78ch; }
 
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
-  .fcard { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
-  .fcard .top-line { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-  .fcard h3 { margin: 0; font-size: 15.5px; font-weight: 750; letter-spacing: -0.01em; }
-  .fcard .odds { font: 700 15px var(--mono); color: var(--accent); white-space: nowrap; }
-  .fcard .meta { font: 500 12px var(--sans); color: var(--ink3); }
-  .fcard .conf { color: var(--accent); letter-spacing: 2px; font-size: 12px; }
-  .fcard p { margin: 0; font-size: 13.5px; color: var(--ink2); }
-  .fcard p.counter { color: var(--ink3); font-size: 12.5px; border-top: 1px dashed var(--line); padding-top: 8px; }
-  .fcard p.counter b { color: var(--neg); font-weight: 650; }
-
-  .callout { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); border-radius: 10px; padding: 16px 18px; margin: 0 0 20px; max-width: 82ch; }
-  .callout.warn { border-left-color: var(--lean); }
-  .callout h3 { margin: 0 0 6px; font-size: 15px; }
-  .callout p { margin: 0; color: var(--ink2); font-size: 14px; }
-
-  table.data { border-collapse: collapse; width: 100%; font-size: 13.5px; }
-  .table-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 22px; }
-  table.data th, table.data td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
-  table.data tr:last-child td { border-bottom: 0; }
-  table.data th { font: 600 11px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); }
-  table.data td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-  table.data td .pos { color: var(--posbar); font-weight: 650; }
-  table.data td .negv { color: var(--negbar); font-weight: 650; }
-
-  .chart { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px 12px; margin-bottom: 22px; }
-  .chart h3 { margin: 0 0 2px; font-size: 15px; }
-  .chart .note { font-size: 12.5px; color: var(--ink3); margin: 0 0 14px; }
-  .roi-grid { display: flex; gap: 10px; align-items: stretch; height: 190px; }
-  .roi-col { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
-  .roi-plot { position: relative; width: 100%; flex: 1; }
-  .roi-plot .zero { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); }
-  .roi-bar { position: absolute; left: 50%; transform: translateX(-50%); width: 26px; max-width: 60%; border-radius: 4px; }
-  .roi-bar.up { background: var(--posbar); bottom: 50%; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
-  .roi-bar.down { background: var(--negbar); top: 50%; border-top-left-radius: 0; border-top-right-radius: 0; }
-  .roi-lab { position: absolute; left: 50%; transform: translateX(-50%); font: 600 11px var(--mono); color: var(--ink2); white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .roi-x { font: 600 11.5px var(--mono); color: var(--ink3); margin-top: 6px; }
-  .roi-x small { display: block; text-align: center; font-weight: 500; color: var(--ink3); }
-
-  .elo-list { display: flex; flex-direction: column; gap: 7px; }
-  .elo-row { display: grid; grid-template-columns: 34px 44px 1fr 52px; align-items: center; gap: 10px; }
-  .elo-rank { font: 600 11px var(--mono); color: var(--ink3); }
-  .elo-team { font: 700 13px var(--mono); }
-  .elo-track { height: 10px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-  .elo-fill { height: 100%; background: var(--accent); border-radius: 4px 4px 4px 4px; }
-  .elo-val { font: 600 12px var(--mono); color: var(--ink2); text-align: right; font-variant-numeric: tabular-nums; }
-
-  .w1grid { display: flex; flex-direction: column; gap: 10px; }
-  .w1 { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
-  .w1 .head { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
-  .w1 h3 { margin: 0; font-size: 15px; font-weight: 750; }
-  .w1 .line { font: 600 13px var(--mono); color: var(--ink2); }
-  .w1 .act { margin-left: auto; }
-  .w1 p { margin: 8px 0 0; font-size: 13.5px; color: var(--ink2); max-width: 90ch; }
-  .act { font: 700 10.5px var(--sans); letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; }
-  .act.now { background: var(--accent); color: var(--chip-ink); }
-  .act.cond { background: var(--lean-soft); color: var(--lean); }
-  .act.wait { background: var(--pass-soft); color: var(--pass); }
-
-  details.tier2 { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 16px; margin-bottom: 12px; }
-  details.tier2 summary { cursor: pointer; font-weight: 700; padding: 13px 0; }
-  details.tier2 ul { margin: 0 0 14px; padding-left: 20px; color: var(--ink2); font-size: 13.5px; }
-  details.tier2 li { margin-bottom: 7px; }
-  details.tier2 li b { color: var(--ink); font-family: var(--mono); font-weight: 650; }
-
-  .slip-h { font-size: 14px; font-weight: 750; letter-spacing: 0.01em; margin: 22px 0 10px; }
-  .slip-h:first-of-type { margin-top: 4px; }
-  .slip-note { font-weight: 500; color: var(--ink3); font-size: 12.5px; }
-  .slip-list { display: flex; flex-direction: column; gap: 8px; }
-  .slip-row {
-    display: grid; grid-template-columns: minmax(190px, 1.4fr) minmax(120px, 1fr) 84px 1fr;
-    gap: 8px 16px; align-items: baseline;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px;
-  }
-  .slip-bet { font: 700 14.5px var(--mono); }
-  .slip-price { font: 600 13px var(--mono); color: var(--accent); }
-  .slip-price small { color: var(--ink3); font-weight: 500; }
-  .slip-units { font: 700 13px var(--mono); color: var(--ink); white-space: nowrap; }
-  .slip-why { font-size: 12.5px; color: var(--ink3); }
-  @media (max-width: 760px) {
-    .slip-row { grid-template-columns: 1fr auto; }
-    .slip-why { grid-column: 1 / -1; }
-  }
-
-  .foot { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--ink3); font-size: 12.5px; max-width: 82ch; }
+  .foot { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--ink3); font-size: 12.5px; max-width: 84ch; }
   .foot b { color: var(--ink2); }
   code { font-family: var(--mono); font-size: 0.92em; background: var(--surface2); padding: 1px 5px; border-radius: 4px; }
   pre { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto; font: 500 13px var(--mono); }
@@ -242,6 +190,7 @@
     .g-date b { display: inline; }
     .edge-meter { display: none; }
     .g-bet { align-items: flex-start; grid-column: 2; grid-row: 2 / span 2; justify-self: end; align-self: start; }
+    .v-hero .a { font-size: 24px; }
   }
   @media (prefers-reduced-motion: no-preference) {
     .game .detail { animation: slide 0.15s ease-out; }
@@ -255,40 +204,87 @@
     <div class="countdown" id="countdown"></div>
   </div>
   <nav class="tabs" role="tablist">
-    <button role="tab" aria-selected="true" data-tab="slip">Bet Slip</button>
+    <button role="tab" aria-selected="true" data-tab="verdict">The Verdict</button>
+    <button role="tab" aria-selected="false" data-tab="slip">Bet Slip</button>
     <button role="tab" aria-selected="false" data-tab="board">The Board</button>
-    <button role="tab" aria-selected="false" data-tab="futures">Futures</button>
-    <button role="tab" aria-selected="false" data-tab="week1">Week 1 Card</button>
-    <button role="tab" aria-selected="false" data-tab="system">Model &amp; Backtest</button>
+    <button role="tab" aria-selected="false" data-tab="system">Model &amp; System</button>
   </nav>
 </header>
 
 <div class="wrap">
 
-  <!-- ================= BET SLIP ================= -->
-  <section class="panel active" id="panel-slip">
-    <p class="eyebrow">The actionable slate &middot; July 18, 2026</p>
-    <h2>Bet Slip — what to bet, exactly</h2>
-    <p class="sub">Only the bets worth placing, with suggested sizing. 1 unit = 1% of bankroll.
-      Re-verify every price at your book before betting &mdash; lines move daily.</p>
+  <!-- ================= VERDICT ================= -->
+  <section class="panel active" id="panel-verdict">
+    <div class="v-hero">
+      <div class="q">Professional backtest &middot; 1999&ndash;2025 &middot; audited engine &middot; blind-verified studies</div>
+      <div class="a">Does the strategy work? <em>No component has a demonstrated edge.</em></div>
+      <p>Every backtestable piece was tested against closing lines at &minus;110 with pre-registered rules,
+         exact binomial statistics, era-drift splits, and independent blind re-implementation of every number.
+         The result is the most valuable thing this project produced: the model is statistically zero, the Week&nbsp;1
+         betting folklore in the slip has no historical support (two patterns historically favored the <i>opposite</i> side),
+         and the futures cannot be backtested at all. Knowing this in July &mdash; before a dollar is staked &mdash; is the win.</p>
+    </div>
 
-    <h3 class="slip-h">1 &middot; Futures — bet now</h3>
+    <div class="v-grid" id="verdict-cards"></div>
+
+    <div class="chart">
+      <h3>Week 1 pattern ROI, 2002&ndash;2025 &mdash; the slip's game-bet heuristics as historical rules</h3>
+      <p class="note">Flat &minus;110 grading, recommended side. None is statistically distinguishable from breakeven except the playoff-road-dog pattern &mdash; which lost (p=0.037). The SB-champ bar is 13 bets: anecdote, not signal.</p>
+      <div class="roi-grid" id="pattern-chart"></div>
+    </div>
+
+    <div class="chart">
+      <h3>Model engine &mdash; validation ROI by season (STRONG bets, 2020&ndash;2025 holdout)</h3>
+      <p class="note">53 bets: +2.7% overall, bootstrap 95% CI [&minus;22.5%, +28.0%], p=0.83 vs breakeven. The train-era edge-to-cover slope (0.0166) refit out-of-sample is 0.0012 (z=0.08): no detectable signal.</p>
+      <div class="roi-grid" id="roi-chart"></div>
+    </div>
+
+    <div class="table-scroll"><table class="data">
+      <thead><tr><th>Week 1 pattern (slip analogue)</th><th>Record</th><th>Hit</th><th>ROI</th><th>p vs breakeven</th><th>Era drift</th></tr></thead>
+      <tbody id="pattern-table"></tbody>
+    </table></div>
+
+    <div class="callout bad">
+      <h3>Four manufactured "edges," caught and killed</h3>
+      <p>v1: +4.7% train ROI from a pre-2020 underdog-moneyline regime &rarr; &minus;8.6% in validation.
+         v2: +8.2% from corrupted alt-line prices in the dataset &rarr; &minus;7.5%.
+         v4: a threshold config that passed consistency gates at +5.4% &rarr; &minus;14.6%; a significance gate (t&nbsp;&ge;&nbsp;2) now blocks the whole class.
+         And the era splits show every Week&nbsp;1 folk pattern flipping sign between 2002&ndash;13 and 2014&ndash;25.
+         This is what "profitable backtests" are usually made of.</p>
+    </div>
+
+    <div class="callout">
+      <h3>What survives professionally</h3>
+      <p>1)&nbsp;Bet small or not at all &mdash; the market is efficient at the close. 2)&nbsp;If you bet, the discipline layer is the value:
+         price conditions, key numbers, one-position sizing for correlated tickets, fractional-Kelly caps.
+         3)&nbsp;The futures are researched opinions &mdash; you are betting the reasoning, not data.
+         4)&nbsp;Track every bet against the closing line this season: CLV is the only fast test of whether any live edge exists.
+         Full study: <code>research/strategy-verdict.md</code> in the repo.</p>
+    </div>
+  </section>
+
+  <!-- ================= BET SLIP ================= -->
+  <section class="panel" id="panel-slip">
+    <p class="eyebrow">The actionable slate &middot; July 18, 2026</p>
+    <h2>Bet Slip</h2>
+    <p class="sub"><b>Read the Verdict tab first: nothing below is a proven edge.</b> These are researched opinions with
+      strict price conditions and small stakes &mdash; each game bet is tagged with its pattern&rsquo;s actual historical record.
+      1 unit = 1% of bankroll. Re-verify every price; lines move daily.</p>
+
+    <h3 class="slip-h">1 &middot; Futures <span class="slip-note">&mdash; expert-consensus opinions; no futures backtest is possible (no historical odds data)</span></h3>
     <div class="slip-list" id="slip-futures"></div>
 
-    <h3 class="slip-h">2 &middot; Week 1 games — bet now</h3>
-    <div class="slip-list" id="slip-week1-now"></div>
+    <h3 class="slip-h">2 &middot; Week 1 opinions <span class="slip-note">&mdash; capped at 0.25u: their historical analogues show no support (see tags)</span></h3>
+    <div class="slip-list" id="slip-week1"></div>
 
-    <h3 class="slip-h">3 &middot; Week 1 games — conditional (price-dependent)</h3>
-    <div class="slip-list" id="slip-week1-cond"></div>
-
-    <h3 class="slip-h">4 &middot; Live model flags <span class="slip-note">— optional micro-stakes; STRONG flags appear here when a posted line goes stale</span></h3>
+    <h3 class="slip-h">3 &middot; Live model flags <span class="slip-note">&mdash; STRONG appears only on an 8+ point stale line; the model is otherwise silent</span></h3>
     <div class="slip-list" id="slip-model"></div>
 
     <div class="callout warn" style="margin-top:20px">
       <h3>Slip rules</h3>
-      <p>Patriots East + Patriots AFC = one opinion, and Bears North + Bears Super Bowl = one opinion &mdash; sized accordingly below.
-         Never add Bears Under 9.5 while holding a Bears ticket. If a listed price is gone, don&rsquo;t chase more than one tick.
-         Total exposure of this slip: <b>&asymp; 5.7 units</b>. Anything the model tiers PASS is deliberately absent.</p>
+      <p>Patriots East + Patriots AFC = one opinion; Bears North + Bears Super Bowl = one opinion &mdash; sized as such.
+         Never add Bears Under 9.5 while holding a Bears ticket. Don&rsquo;t chase moved prices more than one tick.
+         Max exposure: &asymp;5u futures + &le;1.5u of Week&nbsp;1 opinions. Skipping everything here is a fully defensible choice &mdash; that is what the backtest says.</p>
     </div>
   </section>
 
@@ -296,10 +292,9 @@
   <section class="panel" id="panel-board">
     <p class="eyebrow">Live model card &middot; every posted 2026 line</p>
     <h2>The Board</h2>
-    <p class="sub">Every 2026 game with a posted line, scored by the tuned model. One best bet per game, tiered honestly:
-      <b>STRONG</b> needs a huge model/market gap (rare by design), <b>LEAN</b> is the best thin positive-EV option,
-      <b>PASS</b> means the line is fair &mdash; the model recommends no bet. PASS games are hidden by default
-      (they&rsquo;re not bets &mdash; switch the tier filter to see the model&rsquo;s read on them). Click a game for detail.</p>
+    <p class="sub">Every 2026 game with a posted line, scored by the audited model. <b>STRONG</b> needs an 8+ point model/market gap
+      (a stale line), <b>LEAN</b> is thin positive EV, <b>PASS</b> means the line is fair. PASS games are hidden by default &mdash;
+      they are not bets. Click a game for detail.</p>
     <div class="stats" id="board-stats"></div>
     <div class="filters">
       <div class="chips" id="week-chips" aria-label="Week filter"></div>
@@ -321,54 +316,24 @@
     <div class="board" id="board"></div>
   </section>
 
-  <!-- ================= FUTURES ================= -->
-  <section class="panel" id="panel-futures">
-    <p class="eyebrow">Season-long positions &middot; verified July 18, 2026</p>
-    <h2>Futures Board</h2>
-    <p class="sub">Eight bets that survived two-pass verification (price check + adversarial fact-check of the thesis).
-      Odds move constantly &mdash; re-verify at your book. Full rationale in the repo&rsquo;s <code>futures-2026.md</code>.</p>
-    <div class="cards" id="futures-cards"></div>
-    <div style="height:14px"></div>
-    <details class="tier2">
-      <summary>Tier 2 &mdash; strong candidates, re-verify prices first</summary>
-      <ul id="tier2-list"></ul>
-    </details>
-    <div class="callout warn">
-      <h3>Portfolio rules</h3>
-      <p>Patriots division/conference and Bears division/Super Bowl are each one opinion at two leverage points &mdash; size as one position.
-         Bears NFC North and Bears Under 9.5 wins <b>cannot coexist</b>. Bills +1000 and Bengals +200 lose the most value by waiting.
-         Faded on the merits: 49ers +2000 (stale thesis; real price +1700&ndash;1900).</p>
-    </div>
-  </section>
-
-  <!-- ================= WEEK 1 ================= -->
-  <section class="panel" id="panel-week1">
-    <p class="eyebrow">Hand-researched game card &middot; season opens Sept 9</p>
-    <h2>Week 1 Card</h2>
-    <p class="sub">Expert-consensus plays researched in July &mdash; early lines move for eight more weeks; re-check every number and the injury news before betting. No NFL games until preseason (August), and preseason is a skip.</p>
-    <div class="w1grid" id="week1-cards"></div>
-  </section>
-
   <!-- ================= SYSTEM ================= -->
   <section class="panel" id="panel-system">
-    <p class="eyebrow">Walk-forward backtest &middot; 1999&ndash;2025 &middot; nflverse data</p>
-    <h2>Model &amp; Backtest</h2>
-    <p class="sub">Elo ratings (margin-of-victory, home field, rest, QB changes) + EWMA totals, logistic-calibrated against market lines, betting at &minus;110. Train 2008&ndash;2019, untouched validation 2020&ndash;2025.</p>
+    <p class="eyebrow">Walk-forward backtest &middot; audited by an 11-agent adversarial review</p>
+    <h2>Model &amp; System</h2>
+    <p class="sub">Elo ratings (margin-of-victory, home field, rest, QB changes, tie-corrected) + EWMA totals,
+      logistic-calibrated against market lines, betting at &minus;110. Warm-up 1999&ndash;2007, train 2008&ndash;2019,
+      untouched validation 2020&ndash;2025. The audit confirmed zero look-ahead leakage (prefix-invariance test),
+      111/111 bets graded correctly from raw scores, and every published number regenerable from the repo.</p>
 
-    <div class="callout">
-      <h3>The honest headline</h3>
-      <p>This system does <b>not</b> beat NFL closing lines &mdash; nothing built on public box-score features does; only ~6% of
-         model/market disagreement is real signal. Validation ROI on its rare STRONG bets is +2.7% on 53 bets: statistically zero.
-         Its real value: calibrated best-bet rankings, the discipline to PASS fairly-priced games, and flagging <i>stale posted lines</i>
-         in-season, where genuine edges live. Two overfitting traps (+5&ndash;8% &ldquo;ROI&rdquo; in-sample) were caught and removed by the
-         holdout &mdash; treat that as a warning about every shiny backtest you see.</p>
-    </div>
-
-    <div class="chart">
-      <h3>Validation ROI by season &mdash; STRONG best-bets, flat stakes</h3>
-      <p class="note">2020&ndash;2025 held out from all tuning. 53 bets total; small samples, wide error bars &mdash; consistent with zero edge.</p>
-      <div class="roi-grid" id="roi-chart"></div>
-    </div>
+    <div class="table-scroll"><table class="data">
+      <thead><tr><th>Metric</th><th>Train model</th><th>Train market</th><th>Valid model</th><th>Valid market</th></tr></thead>
+      <tbody>
+        <tr><td>Margin MAE (points)</td><td class="num">10.62</td><td class="num">10.40</td><td class="num">10.14</td><td class="num">9.77</td></tr>
+        <tr><td>Total MAE (points)</td><td class="num">10.68</td><td class="num">10.54</td><td class="num">10.73</td><td class="num">10.31</td></tr>
+        <tr><td>Straight-up accuracy</td><td class="num">65.3%</td><td class="num">&mdash;</td><td class="num">64.6%</td><td class="num">&mdash;</td></tr>
+        <tr><td>Brier (home win)</td><td class="num">0.218</td><td class="num">&mdash;</td><td class="num">0.222</td><td class="num">&mdash;</td></tr>
+      </tbody>
+    </table></div>
 
     <div class="table-scroll"><table class="data" id="iter-table">
       <thead><tr><th>Iteration</th><th>Change</th><th>Train ROI</th><th>Validation ROI</th><th>Verdict</th></tr></thead>
@@ -381,100 +346,68 @@
       <div class="elo-list" id="elo-chart"></div>
     </div>
 
-    <div class="table-scroll"><table class="data">
-      <thead><tr><th>Metric</th><th>Model</th><th>Market (close)</th></tr></thead>
-      <tbody>
-        <tr><td>Margin MAE (points)</td><td class="num">10.50</td><td class="num">10.27</td></tr>
-        <tr><td>Total MAE (points)</td><td class="num">10.85</td><td class="num">10.62</td></tr>
-        <tr><td>Straight-up accuracy</td><td class="num">64.7%</td><td class="num">&mdash;</td></tr>
-        <tr><td>Brier score (home win)</td><td class="num">0.220</td><td class="num">&mdash;</td></tr>
-      </tbody>
-    </table></div>
-
     <h3 style="margin:0 0 8px">Run it yourself</h3>
     <pre>pip install -r requirements.txt
-python -m nflbets.weekly          # best bet for every game, next posted week
-python -m nflbets.weekly --all    # every posted 2026 line
-python -m nflbets.backtest        # reproduce the walk-forward backtest
-python -m nflbets.tune            # re-tune; rewrites config/champion.json</pre>
+python -m nflbets.weekly            # best bet for every game, next posted week
+python -m nflbets.backtest          # reproduce the walk-forward backtest
+python -m nflbets.tune              # re-tune; rewrites config/champion.json
+python3 research/w1_bigfav.py       # reproduce the Week 1 pattern studies
+python dashboard/build.py           # rebuild this dashboard from live data</pre>
   </section>
 
   <footer class="foot">
-    <b>Play responsibly.</b> This dashboard is analysis, not a promise of profit; the backtest above is the proof of how hard this market is.
+    <b>Play responsibly.</b> This dashboard's own backtest says the strategy has no demonstrated edge &mdash; treat every listed bet as entertainment priced accordingly.
     Bet only what you can afford to lose &mdash; if it stops being fun, call or text <b>1-800-GAMBLER</b>.
-    Data: nflverse (lines refresh upstream; board generated <span id="gen-date"></span>). Model: <code>nflbets</code> @ config/champion.json.
+    Data: nflverse (board generated <span id="gen-date"></span>). Model: <code>nflbets</code> @ config/champion.json.
   </footer>
 </div>
 
 <script>
 const DATA = /*__DATA__*/;
 
-const FUTURES = [
-  {bet:"Bengals win AFC North", odds:"+200", book:"BetMGM (+240 seen at DK)", conf:3,
-   why:"Traded the No. 10 pick for Dexter Lawrence, added Jonathan Allen and Boye Mafe to a bottom-3 defense, healthy Burrow, 3rd-easiest schedule. Favored Ravens went 8–9 and broke in a new head coach; so did Pittsburgh.",
-   counter:"Baltimore signed Trey Hendrickson away from Cincinnati; the bet lives on Burrow’s health. Shop for +240."},
-  {bet:"Patriots win AFC East", odds:"+120", book:"DraftKings", conf:3,
-   why:"Plus-money on the 14–3 defending division champ that reached Super Bowl LX, then added A.J. Brown and Romeo Doubs for Drake Maye (led NFL in comp% and rating). Jets and Dolphins are non-factors.",
-   counter:"Schedule jumps from easiest to among the toughest; most national writers side with Buffalo."},
-  {bet:"Bills win Super Bowl LXI", odds:"+1000", book:"DraftKings (+1200 FD)", conf:3,
-   why:"3rd in offensive EPA/play, added DJ Moore, Josh Allen’s most complete roster. Number expected to shorten toward 6-1/7-1 by midseason — closing-line value either way.",
-   counter:"First-time HC Joe Brady after firing McDermott; Moore off a career-low year."},
-  {bet:"Patriots win AFC", odds:"+770–850", book:"BetMGM +850", conf:2,
-   why:"The defending AFC champion, upgraded at its thinnest position, priced behind Buffalo and Baltimore (~+500). Leverage version of the division bet.",
-   counter:"Correlated with the AFC East ticket — size the two as one position."},
-  {bet:"Bears win NFC North", odds:"+320", book:"FanDuel", conf:2,
-   why:"Defending division champ priced third behind Detroit and Green Bay; Packers open without Micah Parsons. Caleb Williams enters year two of Ben Johnson’s scheme.",
-   counter:"11–6 was built on +22 turnover margin and record late-game luck — the regression case is real (books juice their Under 9.5)."},
-  {bet:"Broncos win AFC West", odds:"+200–239", book:"DraftKings +225", conf:2,
-   why:"14–3 defending champ with the AFC 1-seed, added Jaylen Waddle — priced third behind the 6–11 Chiefs and the Chargers. Classic overcorrection to Mahomes’ return.",
-   counter:"KC’s collapse was an injury artifact; Bo Nix is off a fractured ankle. Take +225 or better."},
-  {bet:"Bears win Super Bowl LXI", odds:"+2500", book:"BetMGM (+2700 FD)", conf:1,
-   why:"Took the eventual-favorite Rams to OT in the divisional round; priced like a fringe team. Small stakes; correlated with the division ticket.",
-   counter:"Same regression caveat as the division bet."},
-  {bet:"Vikings win Super Bowl LXI", odds:"+5000–6000", book:"BetMGM +5000", conf:1,
-   why:"No. 3 defense by EPA/play under Flores; Kyler Murray revival flyer at lottery odds.",
-   counter:"The Burrow-trade upside thesis is dead for 2026 — fun-money only."},
+// ---------- verdict content ----------
+const VERDICTS = [
+  {c:"Model engine (Elo + calibration)", b:"noedge", bl:"No edge",
+   s:"Valid: 28–24–1, ROI +2.7%, CI [−22.5%, +28.0%] · OOS slope z=0.08"},
+  {c:"W1 big home favorite (Jags −7)", b:"nosupport", bl:"No support",
+   s:"19–22 since 2002, ROI −11.5% · dog side 14–7 since 2014 (ns)"},
+  {c:"W1 champion dog (Broncos +2.5)", b:"nosupport", bl:"No support",
+   s:"5–9–1, ROI −29.7% (ns) · broader version 20–28–2, −19.6%"},
+  {c:"W1 playoff road dog (49ers +3.5)", b:"nosupport", bl:"Fade side won",
+   s:"9–19–3 (32.1%, p=0.037) · all playoff road dogs 36.6% (p=0.009) · dead post-2014"},
+  {c:"SB champ opener (Seahawks −3.5)", b:"insufficient", bl:"n=13",
+   s:"9–3–1, +39.9% ROI but p=0.15 · full-sample champ test: coin flip (n=315)"},
+  {c:"Week 1 baselines", b:"efficient", bl:"Efficient",
+   s:"Homes 49.1%, dogs 52.1%, unders 54.1% — all ns vs breakeven"},
+  {c:"Futures slate (8 tickets)", b:"untestable", bl:"Untestable",
+   s:"No historical futures odds exist in the dataset — opinions, not edges"},
 ];
+document.getElementById("verdict-cards").innerHTML = VERDICTS.map(v => `
+  <div class="v-card">
+    <div class="head"><h3>${v.c}</h3><span class="badge ${v.b}">${v.bl}</span></div>
+    <div class="stat">${v.s}</div>
+  </div>`).join("");
 
-const TIER2 = [
-  {b:"Dolphins UNDER 4.5 wins (−130)", t:"full teardown, record $179M dead money, Malik Willis (6 career starts) at QB; juice already prices the collapse."},
-  {b:"Rams OVER 11.5 wins (−140)", t:"sharp money stayed on the Over after the line jumped from 10.5 (VSiN: 95% of dollars). Garrett + McDuffie + reigning MVP Stafford."},
-  {b:"Bengals OVER 9.5 wins (−140/−145)", t:"same thesis as the division bet, but steamed from −115 — the +200 division ticket is the better expression."},
-  {b:"Bears UNDER 9.5 wins (−125)", t:"the regression side of the Bears argument — conflicts with the division bet; pick one."},
-  {b:"Jets UNDER 5.5 wins (−110)", t:"rebuilding roster, no QB answer."},
-  {b:"Panthers OVER 7.5 wins (+110)", t:"best roster in a wide-open NFC South; dissent: −69 point differential, 25th DVOA."},
-  {b:"Drake Maye MVP +1000 (DK) / +850 (FD)", t:"lost 2025 MVP by one vote, just got A.J. Brown; QBs on 1-seeds win this award."},
-  {b:"Jaxon Smith-Njigba OPOY +1500", t:"reigning OPOY (league-best 1,793 yards) priced behind two running backs."},
-  {b:"Caleb Downs DROY +750 (Caesars)", t:"top defensive talent slid to No. 11 (Cowboys); every-snap role."},
-  {b:"Seahawks win total 10.5 — no play", t:"sharp opinion genuinely split on the champs; pass."},
+const PATTERNS = [
+  {k:"Jags −7 type", v:-0.115, n:"n=41"},
+  {k:"Champ dog", v:-0.297, n:"n=15"},
+  {k:"Playoff road dog", v:-0.349, n:"n=31"},
+  {k:"SB champ home", v:0.399, n:"n=13"},
+  {k:"W1 unders", v:0.032, n:"n=383"},
+  {k:"W1 dogs", v:-0.004, n:"n=382"},
 ];
-
-const WEEK1 = [
-  {m:"Jaguars −7 vs Browns", l:"O/U 40.5", a:"now", an:"Bet now",
-   t:"The consensus play of the week: SportsLine model top pick and CBS says grab the flat −7. A 13–4 division champ against a possibly rusty Deshaun Watson, rookie receivers, and a new Cleveland staff."},
-  {m:"Broncos +2.5 at Chiefs (MNF)", l:"ML +130 · O/U 42.5", a:"now", an:"Bet now",
-   t:"ESPN panel pick: the 14–3 defending division champ gets points at a 6–11 team priced entirely on Mahomes’ first game back from the ACL. Most news-sensitive bet on the board — bail if Nix’s ankle becomes a story."},
-  {m:"49ers +3.5 vs Rams (Melbourne)", l:"O/U 48.5", a:"now", an:"Bet now",
-   t:"Opened −2.5, steamed through the key number of 3 after the Garrett trade. A 12–5 playoff team at +3.5 on a true neutral field in the first-ever regular season game in Australia — the weirdness favors the dog."},
-  {m:"Seahawks −3.5 vs Patriots (opener)", l:"O/U 44.5", a:"cond", an:"−3.5 or better",
-   t:"The champs at the key number at home, where their defense sacked Maye six times in the Super Bowl. Don’t lay more than −3.5 — the A.J. Brown trade should compress this line."},
-  {m:"Eagles vs Commanders", l:"now −5.5 (was −4.5)", a:"wait", an:"Wait",
-   t:"The modeled edge was at −4.5; the line already moved to −5.5. Only playable at −5 or shorter."},
-  {m:"Vikings +1.5 at Packers", l:"ML +105 · O/U 44.5", a:"wait", an:"Watch list",
-   t:"Green Bay opens without Micah Parsons; Minnesota travels with the better defense and Kyler Murray (−1000 to start). Wait for preseason evidence of Murray in O’Connell’s scheme; quarter-unit at most."},
+const PATTERN_ROWS = [
+  {p:"Big home favorite −6.5 to −7.5 (bet home)", r:"19–22–0", h:"46.3%", roi:"−11.5%", pv:"0.53", era:"60% pre-2014 → 33% after"},
+  {p:"Division champ +1 to +6.5 vs non-playoff team (bet champ)", r:"5–9–1", h:"35.7%", roi:"−29.7%", pv:"0.29", era:"13% pre-2014 → 67% after (tiny n)"},
+  {p:"Playoff-team road dog +2.5 to +4 (bet dog)", r:"9–19–3", h:"32.1%", roi:"−34.9%", pv:"0.037", era:"14% pre-2014 → 50% after"},
+  {p:"Defending SB champ home, laying ≤6.5 (bet champ)", r:"9–3–1", h:"75.0%", roi:"+39.9%", pv:"0.15", era:"71% / 80% — 13 bets total"},
+  {p:"All W1 unders (control)", r:"205–174–4", h:"54.1%", roi:"+3.2%", pv:"0.54", era:"stable, ns"},
+  {p:"All W1 dogs (control)", r:"195–179–8", h:"52.1%", roi:"−0.4%", pv:"0.96", era:"50% → 54%, ns"},
 ];
-
-const ITERATIONS = [
-  {v:"v0", c:"Raw Elo + Normal probabilities, dataset odds, all bet types", tr:"−1.6% (4,508 bets)", va:"—", verdict:"Bets nearly every game; treats its own noise as edge"},
-  {v:"v1", c:"Market anchoring (β≈0.06) + EV thresholds", tr:"+4.7% (2,073)", va:"−8.6% (731)", verdict:"In-sample profit was an underdog-moneyline regime; collapsed out-of-sample"},
-  {v:"v2", c:"Logistic calibration, −110 pricing, alt-line artifacts removed", tr:"+8.2% (952)", va:"−7.5% (396)", verdict:"Still moneyline-dominated; the model adds ~no ML signal"},
-  {v:"v3 — final", c:"Moneylines removed, QB-change feature, robust threshold sweep", tr:"−12.7% (58)", va:"+2.7% (53)", verdict:"Honest: no robust edge vs closing lines; conservative STRONG thresholds"},
-];
-
-const ROI = [
-  {s:"2020", v:-0.042, n:13}, {s:"2021", v:0.041, n:11}, {s:"2022", v:0.061, n:9},
-  {s:"2023", v:-0.182, n:7}, {s:"2024", v:-0.045, n:8}, {s:"2025", v:0.527, n:5},
-];
+document.getElementById("pattern-table").innerHTML = PATTERN_ROWS.map(r => `
+  <tr><td>${r.p}</td><td class="num">${r.r}</td><td class="num">${r.h}</td>
+  <td class="num">${r.roi.startsWith("−") ? `<span class="negv">${r.roi}</span>` : `<span class="posv">${r.roi}</span>`}</td>
+  <td class="num">${r.pv}</td><td>${r.era}</td></tr>`).join("");
 
 // ---------- tabs ----------
 const tabs = document.querySelectorAll("nav.tabs button");
@@ -486,7 +419,7 @@ tabs.forEach(b => b.addEventListener("click", () => {
 
 // ---------- countdown ----------
 function tickCountdown() {
-  const kick = new Date("2026-09-10T00:20:00Z"); // NE @ SEA, Sept 9 8:20pm ET
+  const kick = new Date("2026-09-10T00:20:00Z");
   const ms = kick - new Date();
   const el = document.getElementById("countdown");
   if (ms <= 0) { el.innerHTML = "<b>Season is live</b>"; return; }
@@ -496,42 +429,51 @@ function tickCountdown() {
 tickCountdown(); setInterval(tickCountdown, 30000);
 document.getElementById("gen-date").textContent = DATA.generated;
 
+// ---------- charts (diverging bars) ----------
+function divergingChart(elId, items, fmt) {
+  const max = Math.max(...items.map(r => Math.abs(r.v)));
+  document.getElementById(elId).innerHTML = items.map(r => {
+    const hPct = Math.abs(r.v) / max * 44;
+    const up = r.v >= 0;
+    const labPos = up ? `bottom: calc(50% + ${hPct}% + 4px)` : `top: calc(50% + ${hPct}% + 4px)`;
+    return `<div class="roi-col">
+      <div class="roi-plot">
+        <div class="zero"></div>
+        <div class="roi-bar ${up ? "up" : "down"}" style="height:${hPct}%"></div>
+        <div class="roi-lab" style="${labPos}">${fmt(r.v)}</div>
+      </div>
+      <div class="roi-x">${r.k || r.s}<small>${r.n}</small></div>
+    </div>`;
+  }).join("");
+}
+divergingChart("pattern-chart", PATTERNS, v => (v > 0 ? "+" : "") + (100 * v).toFixed(1) + "%");
+const ROI = [
+  {s:"2020", v:-0.042, n:"13 bets"}, {s:"2021", v:0.041, n:"11 bets"}, {s:"2022", v:0.061, n:"9 bets"},
+  {s:"2023", v:-0.182, n:"7 bets"}, {s:"2024", v:-0.045, n:"8 bets"}, {s:"2025", v:0.527, n:"5 bets"},
+];
+divergingChart("roi-chart", ROI, v => (v > 0 ? "+" : "") + (100 * v).toFixed(1) + "%");
+
 // ---------- bet slip ----------
 const SLIP_FUTURES = [
-  {bet:"Bengals to win AFC North", price:"+200", src:"BetMGM — shop for +240 at DK", u:"1.0u",
-   why:"Most analyst-endorsed division bet on the board."},
-  {bet:"Patriots to win AFC East", price:"+120", src:"DraftKings", u:"1.0u",
-   why:"Plus-money on the 14–3 defending champ, upgraded with A.J. Brown."},
-  {bet:"Bills to win Super Bowl LXI", price:"+1000", src:"DraftKings (+1200 at FanDuel)", u:"1.0u",
-   why:"Number expected to shorten by midseason — bet before it does."},
-  {bet:"Patriots to win AFC", price:"+770 to +850", src:"BetMGM +850", u:"0.5u",
-   why:"Leverage version of the East ticket — sized as the same opinion."},
-  {bet:"Bears to win NFC North", price:"+320", src:"FanDuel", u:"0.5u",
-   why:"Defending champ priced third; Parsons out to start the season."},
-  {bet:"Broncos to win AFC West", price:"+225 or better", src:"DraftKings", u:"0.5u",
-   why:"Skip if only +200 is available — the value is in the number."},
-  {bet:"Bears to win Super Bowl LXI", price:"+2500", src:"BetMGM (+2700 FD)", u:"0.25u",
-   why:"Lottery leverage on the division thesis."},
-  {bet:"Vikings to win Super Bowl LXI", price:"+5000 or better", src:"BetMGM", u:"0.25u",
-   why:"Fun-money flyer on an elite defense."},
+  {bet:"Bengals to win AFC North", price:"+200", src:"BetMGM — shop for +240 at DK", u:"1.0u", why:"Most analyst-endorsed division bet on the board."},
+  {bet:"Patriots to win AFC East", price:"+120", src:"DraftKings", u:"1.0u", why:"Plus-money on the 14–3 defending champ, upgraded with A.J. Brown."},
+  {bet:"Bills to win Super Bowl LXI", price:"+1000", src:"DraftKings (+1200 FD)", u:"1.0u", why:"Number expected to shorten by midseason — bet before it does."},
+  {bet:"Patriots to win AFC", price:"+770 to +850", src:"BetMGM +850", u:"0.5u", why:"Leverage version of the East ticket — same opinion, sized as one."},
+  {bet:"Bears to win NFC North", price:"+320", src:"FanDuel", u:"0.5u", why:"Defending champ priced third; Parsons out to start the season."},
+  {bet:"Broncos to win AFC West", price:"+225 or better", src:"DraftKings", u:"0.5u", why:"Skip at +200 — the value is in the number."},
+  {bet:"Bears to win Super Bowl LXI", price:"+2500", src:"BetMGM (+2700 FD)", u:"0.25u", why:"Lottery leverage on the division thesis."},
+  {bet:"Vikings to win Super Bowl LXI", price:"+5000 or better", src:"BetMGM", u:"0.25u", why:"Fun-money flyer on an elite defense."},
 ];
-const SLIP_W1_NOW = [
-  {bet:"Jaguars −7 vs Browns", price:"−110", src:"grab the flat 7 before −7.5", u:"1.0u",
-   why:"Model + expert consensus play of Week 1."},
-  {bet:"Broncos +2.5 at Chiefs", price:"−110 (or ML +130)", src:"Monday night", u:"0.5u",
-   why:"Bail if Bo Nix's ankle becomes a story in camp."},
-  {bet:"49ers +3.5 vs Rams (Melbourne)", price:"−110", src:"line steamed through 3 — dog side is the value", u:"0.5u",
-   why:"First-ever game in Australia; weirdness favors the dog."},
+const SLIP_W1 = [
+  {bet:"Jaguars −7 vs Browns", price:"−110 · flat 7 only", src:"skip at −7.5", u:"0.25u",
+   why:"Expert-consensus pick. <b>Pattern record: 19–22 since 2002 (−11.5% ROI)</b> — bet the reasoning, not the pattern."},
+  {bet:"Broncos +2.5 at Chiefs", price:"−110 (or ML +130)", src:"Monday night · news-sensitive", u:"0.25u",
+   why:"ESPN panel pick. <b>Pattern record: 5–9–1 (−29.7% ROI)</b> — the 'disrespected champ' angle has never cashed historically."},
+  {bet:"49ers +3.5 vs Rams (Melbourne)", price:"−110", src:"steamed through 3", u:"0.25u",
+   why:"Line-value logic. <b>Pattern record: 9–19–3 (p=0.037, wrong side)</b> — history actually faded playoff road dogs."},
+  {bet:"Seahawks −3.5 vs Patriots", price:"only −3.5 or shorter", src:"opener, Sept 9", u:"0.25u",
+   why:"Champs at a key number. <b>Pattern record: 9–3–1 but n=13</b> — anecdote-sized support at best."},
 ];
-const SLIP_W1_COND = [
-  {bet:"Seahawks −3.5 vs Patriots", price:"only at −3.5 or shorter", src:"opener, Sept 9", u:"0.5u",
-   why:"If the line hits −3, that's the buy signal. Never lay −4."},
-  {bet:"Eagles vs Commanders", price:"only at −5 or shorter", src:"currently −5.5 — stand down", u:"0.5u",
-   why:"The modeled edge was at −4.5; don't chase the moved line."},
-  {bet:"Vikings +1.5 / ML +105 at Packers", price:"watch list", src:"wait for Murray preseason tape", u:"0.25u",
-   why:"Only if the Murray-in-O'Connell fit looks real in August."},
-];
-
 function slipRow(x) {
   return `<div class="slip-row">
     <span class="slip-bet">${x.bet}</span>
@@ -541,11 +483,9 @@ function slipRow(x) {
   </div>`;
 }
 document.getElementById("slip-futures").innerHTML = SLIP_FUTURES.map(slipRow).join("");
-document.getElementById("slip-week1-now").innerHTML = SLIP_W1_NOW.map(slipRow).join("");
-document.getElementById("slip-week1-cond").innerHTML = SLIP_W1_COND.map(slipRow).join("");
+document.getElementById("slip-week1").innerHTML = SLIP_W1.map(slipRow).join("");
 (function slipModel() {
-  const flags = DATA.games.filter(g => g.tier !== "PASS")
-    .sort((a, b) => (b.ev ?? 0) - (a.ev ?? 0));
+  const flags = DATA.games.filter(g => g.tier !== "PASS").sort((a, b) => (b.ev ?? 0) - (a.ev ?? 0));
   const el = document.getElementById("slip-model");
   if (!flags.length) {
     el.innerHTML = `<div class="slip-row"><span class="slip-why" style="grid-column:1/-1">No model flags right now — every posted line is fair. Check back as lines move.</span></div>`;
@@ -554,10 +494,10 @@ document.getElementById("slip-week1-cond").innerHTML = SLIP_W1_COND.map(slipRow)
   el.innerHTML = flags.map(g => slipRow({
     bet: `${g.bet} — ${g.away}@${g.home} (Wk ${g.week})`,
     price: "−110",
-    src: `model edge; EV ${(100 * g.ev).toFixed(1)}%`,
-    u: (g.tier === "STRONG" ? "0.5u" : "0.1u"),
+    src: `model edge · EV ${(100 * g.ev).toFixed(1)}%`,
+    u: g.tier === "STRONG" ? "0.5u" : "0.1u",
     why: g.tier === "STRONG"
-      ? "Large model/market gap — the rare flag worth a real stake."
+      ? "Large model/market gap — the rare flag worth a real (still small) stake."
       : "Thin LEAN — micro-stake or skip; listed for completeness.",
   })).join("");
 })();
@@ -565,7 +505,7 @@ document.getElementById("slip-week1-cond").innerHTML = SLIP_W1_COND.map(slipRow)
 // ---------- board ----------
 const state = { week: "ALL", tier: "PLAY", sort: "date", q: "" };
 const fmtSigned = x => (x > 0 ? "+" : "") + x.toFixed(1);
-const fmtSpread = s => s === 0 ? "PK" : (s > 0 ? "−" + s : "+" + (-s)); // home perspective
+const fmtSpread = s => s === 0 ? "PK" : (s > 0 ? "−" + s : "+" + (-s));
 const fmtTotal = t => Number.isFinite(t) ? t : "—";
 const fmtMl = v => v == null || !Number.isFinite(v) ? "—" : (v > 0 ? "+" + v : String(v));
 
@@ -577,7 +517,7 @@ function statCards() {
     <div class="stat"><div class="k">Posted lines</div><div class="v">${g.length}<small> games / wk 1–${Math.max(...g.map(x=>x.week))}</small></div></div>
     <div class="stat"><div class="k">Strong</div><div class="v">${count("STRONG")}</div></div>
     <div class="stat"><div class="k">Lean</div><div class="v">${count("LEAN")}</div></div>
-    <div class="stat"><div class="k">Pass</div><div class="v">${count("PASS")}<small> — discipline is the edge</small></div></div>
+    <div class="stat"><div class="k">Pass</div><div class="v">${count("PASS")}<small> — hidden by default</small></div></div>
     <div class="stat"><div class="k">First kickoff</div><div class="v">${next.away}@${next.home}<small> ${next.date}</small></div></div>`;
 }
 
@@ -603,8 +543,8 @@ function weekChips() {
 }
 
 function tierNote(g) {
-  if (g.tier === "STRONG") return "Model/market gap is large enough to clear the tuned threshold — rare. Historically ~9/season; treat as an opinion with capped stakes, not a lock.";
-  if (g.tier === "LEAN") return "Thin positive EV — the best option if you insist on betting this game, at a fraction of a normal stake.";
+  if (g.tier === "STRONG") return "Model/market gap large enough to clear the significance-gated threshold — a stale-line flag, not a lock.";
+  if (g.tier === "LEAN") return "Thin positive EV — micro-stake at most; the backtest says expect nothing.";
   return "The posted line is fair by the model — no bet recommended. Paying −110 vig on a coin flip is how bankrolls die.";
 }
 
@@ -622,14 +562,12 @@ function renderBoard() {
   else g.sort((a, b) => a.date.localeCompare(b.date) || a.home.localeCompare(b.home));
 
   const el = document.getElementById("board");
-  el.innerHTML = g.length ? "" : "<p class='sub'>No games match the filters.</p>";
+  el.innerHTML = g.length ? "" : "<p class='sub'>No games match the filters — with 'STRONG + LEAN' selected that usually means the model finds every posted line fair. Switch the tier filter to see all games.</p>";
   for (const x of g) {
     const d = document.createElement("div");
     d.className = "game";
     const edgePct = Math.max(-10, Math.min(10, x.rawEdge)) / 10 * 50;
-    const fillStyle = edgePct >= 0
-      ? `left:50%;width:${edgePct}%`
-      : `left:${50 + edgePct}%;width:${-edgePct}%`;
+    const fillStyle = edgePct >= 0 ? `left:50%;width:${edgePct}%` : `left:${50 + edgePct}%;width:${-edgePct}%`;
     d.innerHTML = `
       <button class="row" aria-expanded="false">
         <span class="g-date"><b>Wk ${x.week}</b>${x.date.slice(5)}</span>
@@ -665,44 +603,16 @@ document.getElementById("tier-filter").addEventListener("change", e => { state.t
 document.getElementById("sort-by").addEventListener("change", e => { state.sort = e.target.value; renderBoard(); });
 document.getElementById("team-search").addEventListener("input", e => { state.q = e.target.value.trim(); renderBoard(); });
 
-// ---------- futures ----------
-document.getElementById("futures-cards").innerHTML = FUTURES.map(f => `
-  <div class="fcard">
-    <div class="top-line"><h3>${f.bet}</h3><span class="odds">${f.odds}</span></div>
-    <div class="meta">${f.book} &middot; <span class="conf">${"●".repeat(f.conf)}${"○".repeat(3 - f.conf)}</span> confidence</div>
-    <p>${f.why}</p>
-    <p class="counter"><b>The counter:</b> ${f.counter}</p>
-  </div>`).join("");
-document.getElementById("tier2-list").innerHTML = TIER2.map(x => `<li><b>${x.b}</b> — ${x.t}</li>`).join("");
-
-// ---------- week 1 ----------
-document.getElementById("week1-cards").innerHTML = WEEK1.map(w => `
-  <div class="w1">
-    <div class="head"><h3>${w.m}</h3><span class="line">${w.l}</span><span class="act ${w.a}">${w.an}</span></div>
-    <p>${w.t}</p>
-  </div>`).join("");
-
 // ---------- system ----------
+const ITERATIONS = [
+  {v:"v0", c:"Raw Elo + Normal probabilities, dataset odds, all bet types", tr:"−1.6% (4,508 bets)", va:"—", verdict:"Bets nearly every game; treats its own noise as edge"},
+  {v:"v1", c:"Market anchoring (β≈0.06) + EV thresholds", tr:"+4.7% (2,073)", va:"−8.6% (731)", verdict:"Underdog-moneyline regime; collapsed out-of-sample"},
+  {v:"v2", c:"Logistic calibration, −110 pricing, alt-line artifacts removed", tr:"+8.2% (952)", va:"−7.5% (396)", verdict:"Still moneyline-dominated; model adds ~no ML signal"},
+  {v:"v3", c:"Moneylines removed, QB-change feature, robust threshold sweep", tr:"−12.7% (58)", va:"+2.7% (53)", verdict:"No robust edge; conservative fallback thresholds"},
+  {v:"v4 — final", c:"Post-audit: tie-game Elo fix, window-scoped metrics, t≥2 significance gate (caught a 4th overfit: +5.4% train → −14.6% valid)", tr:"−11.2% (57)", va:"+2.7% (53)", verdict:"Audited conclusion: no edge vs closing lines"},
+];
 document.querySelector("#iter-table tbody").innerHTML = ITERATIONS.map(i => `
   <tr><td class="num"><b>${i.v}</b></td><td>${i.c}</td><td class="num">${i.tr}</td><td class="num">${i.va}</td><td>${i.verdict}</td></tr>`).join("");
-
-(function roiChart() {
-  const max = Math.max(...ROI.map(r => Math.abs(r.v)));
-  const el = document.getElementById("roi-chart");
-  el.innerHTML = ROI.map(r => {
-    const hPct = Math.abs(r.v) / max * 46; // % of plot height, half above/below zero
-    const up = r.v >= 0;
-    const labPos = up ? `bottom: calc(50% + ${hPct}% + 4px)` : `top: calc(50% + ${hPct}% + 4px)`;
-    return `<div class="roi-col">
-      <div class="roi-plot">
-        <div class="zero"></div>
-        <div class="roi-bar ${up ? "up" : "down"}" style="height:${hPct}%"></div>
-        <div class="roi-lab" style="${labPos}">${(r.v > 0 ? "+" : "") + (100 * r.v).toFixed(1)}%</div>
-      </div>
-      <div class="roi-x">${r.s}<small>${r.n} bets</small></div>
-    </div>`;
-  }).join("");
-})();
 
 (function eloChart() {
   const top = DATA.ratings.slice(0, 12);

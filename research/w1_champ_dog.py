@@ -145,8 +145,8 @@ def summarize(bets):
     hit = w / dec if dec else float("nan")
     roi = (w * WIN_UNITS - l * 1.0) / n if n else float("nan")
     lo, hi = wilson_ci(w, dec)
-    p_be = stats.binomtest(w, dec, BREAKEVEN).pvalue if dec else float("nan")
-    p_half = stats.binomtest(w, dec, 0.5).pvalue if dec else float("nan")
+    p_be = binom_test_two_sided(w, dec, BREAKEVEN)
+    p_half = binom_test_two_sided(w, dec, 0.5)
 
     def era(a, b):
         sub = [x for x in bets if a <= x["season"] <= b]
