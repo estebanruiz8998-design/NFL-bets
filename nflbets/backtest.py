@@ -38,12 +38,18 @@ class BacktestResult:
     predictions: pd.DataFrame
     bets: list[BetRecord] = field(default_factory=list)
     candidates: pd.DataFrame | None = None
+    bet_start: int | None = None
+    bet_end: int | None = None
 
     def bets_df(self) -> pd.DataFrame:
         return pd.DataFrame([vars(b) for b in self.bets])
 
     def summary(self) -> dict:
+        # Model-quality metrics are scoped to the bet window so "train" and
+        # "validation" summaries report on their own seasons, not 1999-2025.
         p = self.predictions
+        if self.bet_start is not None:
+            p = p[p.season.between(self.bet_start, self.bet_end)]
         graded = p[p.result.notna()]
         out = {
             "games": len(graded),
@@ -143,7 +149,8 @@ def run(
     elo = EloModel(cfg)
     tot = TotalsModel(cfg)
     preds = []
-    result = BacktestResult(predictions=pd.DataFrame())
+    result = BacktestResult(predictions=pd.DataFrame(),
+                            bet_start=bet_start, bet_end=bet_end)
     all_cands = []
 
     for row in games.itertuples(index=False):

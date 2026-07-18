@@ -35,24 +35,29 @@ config/champion.json   the tuned configuration the card runs on
 | v0 | Raw Elo + Normal probs, dataset odds, all bet types | −1.6% (4,508 bets, 2008–25) | — | Bets almost every game; model treats its own noise as edge |
 | v1 | Market anchoring (β≈0.06 fit by OLS) + EV thresholds | +4.7% (2,073) | −8.6% (731) | In-sample profit was underdog-moneyline structure, collapsed OOS |
 | v2 | Logistic calibration, −110 pricing, kill odds-column exploit | +8.2% (952) | −7.5% (396) | Still ML-dominated: model adds ~no signal to ML (b₁≈0.02) |
-| v3 (final) | Moneylines removed, QB-change Elo feature, robust threshold sweep (both train halves + majority of seasons must profit) | −12.7% (58) | **+2.7% (53)** | Honest: no robust edge exists vs closing lines; conservative fallback thresholds |
+| v3 | Moneylines removed, QB-change Elo feature, robust threshold sweep (both train halves + majority of seasons must profit) | −12.7% (58) | +2.7% (53) | No robust edge; conservative fallback thresholds |
+| v4 (final) | Post-audit: tie-game Elo fix, window-scoped metrics, **t ≥ 2 significance gate on the threshold sweep** (which caught a fourth overfit: +5.4% on 144 train bets → −14.6% on 141 validation bets) | −11.2% (57) | **+2.7% (53)** | Same conclusion, now audited: 11-agent adversarial audit confirmed no leakage, correct grading of all bets, reproducible calibrations |
 
-Final model quality (validation-inclusive window, walk-forward):
+Final model quality (walk-forward, correctly window-scoped after audit):
 
-| Metric | Model | Market (close) |
-|--------|-------|----------------|
-| Margin MAE | 10.50 | 10.27 |
-| Total MAE | 10.85 | 10.62 |
-| Straight-up accuracy | 64.7% | — |
-| Brier (home win) | 0.220 | — |
+| Metric | Train 2008–19 model | Train market | Validation 2020–25 model | Validation market |
+|--------|--------------------:|-------------:|-------------------------:|------------------:|
+| Margin MAE | 10.62 | 10.40 | 10.14 | 9.77 |
+| Total MAE | 10.68 | 10.54 | 10.73 | 10.31 |
+| Straight-up accuracy | 65.3% | — | 64.6% | — |
+| Brier (home win) | 0.218 | — | 0.222 | — |
 
-Calibration fits (train): P(cover) = σ(0.0166 × edge_pts) — a 6-point model/market gap ⇒ ~52.5% cover probability; ~breakeven at −110. The QB-change penalty (30 Elo ≈ 1.2 pts) improved MAE and straight-up accuracy but does not flip the economics.
+## The verdict, with statistics
 
-## The honest headline
+**The model engine does not beat NFL closing lines. Verdict: NO EDGE.**
 
-**This system does not beat NFL closing lines.** Nobody's public-feature Elo does; the closing line is the strongest publicly available predictor of NFL games, and our anchoring fit measures that directly: only ~6% of model/market disagreement is real signal. The final config makes ≈9 STRONG bets/season (requiring an 8+ point model/market gap); train −12.7% and validation +2.7% on those are both statistically zero on samples this small.
+- Validation STRONG stream: 28–24–1, hit 53.9%, **95% CI [40.5%, 66.7%]** — the interval contains both coin-flip (50%) and −110 breakeven (52.4%). Flat ROI +2.7% with **bootstrap 95% CI [−22.5%, +28.0%]**; p = 0.83 against breakeven. Statistically indistinguishable from zero.
+- The decisive test: the calibration slope P(cover) = σ(b × edge) fit on train is b = 0.0166; refit on the untouched 2020–2025 seasons it is **b = 0.0012 (SE 0.0155, z = 0.08)**. Out of sample, the model's disagreement with the closing line carries **no detectable predictive signal whatsoever**. The training-era relationship did not replicate.
+- The model's margin error is worse than the market's in both windows (10.62 vs 10.40; 10.14 vs 9.77). Nobody's public box-score model beats the close; ours measurably doesn't either.
 
-Two overfitting traps were caught and removed by the holdout protocol, which is the report's second headline: *any* backtest of this kind that shows large in-sample ROI is almost certainly exploiting a data artifact (v1: pre-2020 underdog-ML mispricing that no longer exists; v2: alt-line price artifacts).
+**Four overfitting traps were caught and removed by the holdout protocol** — v1 (underdog-moneyline regime), v2 (alt-line price artifacts), v3→v4 (a threshold config that passed consistency gates in-sample at +5.4% and lost 14.6% out of sample), each showing exactly how "profitable backtest" claims are usually manufactured. Treat that as this report's second product.
+
+An 11-agent adversarial audit (independent reproduction of every claim) confirmed: zero look-ahead leakage (prefix-invariance test), 111/111 historical bets graded correctly from raw scores, calibrations reproducible to 1e-6, Kelly math exact, and every documented number regenerable from the checked-in code and config.
 
 ## So what is it good for in 2026?
 

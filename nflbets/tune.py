@@ -161,11 +161,14 @@ def fit_calibrations(preds: pd.DataFrame, cfg: Config) -> Config:
 def tune_thresholds(games: pd.DataFrame, cfg: Config) -> Config:
     """Sweep per-type EV thresholds over the train best-bet-per-game stream.
 
-    Anti-overfit criteria: a candidate threshold pair must produce at least
-    ~5 bets/season, be profitable in both halves of the train window, and be
-    profitable in a majority of individual seasons. Among survivors, pick the
-    highest total profit. If nothing survives, thresholds are set so that no
-    STRONG bet is ever flagged (the card still ranks and tiers every game).
+    Anti-overfit criteria (pre-registered, in this order): a candidate
+    threshold pair must produce at least ~5 bets/season, be profitable in both
+    halves of the train window, be profitable in a majority of individual
+    seasons, and its total profit must clear a t-statistic of 2.0
+    (profit / (per-bet std * sqrt(n))) — betting noise produces small positive
+    train ROIs for free; only a statistically significant one earns the STRONG
+    tier. Among survivors, pick the highest total profit. If nothing survives,
+    fall back to conservative fixed thresholds.
     """
     res = backtest.run(cfg, games, bet_start=TRAIN[0], bet_end=TRAIN[1],
                        collect_candidates=True)
@@ -194,6 +197,9 @@ def tune_thresholds(games: pd.DataFrame, cfg: Config) -> Config:
         if (by_season > 0).sum() < 0.55 * len(by_season):
             continue
         profit = sel.profit.sum()
+        t_stat = profit / (sel.profit.std(ddof=1) * np.sqrt(n)) if n > 1 else 0.0
+        if t_stat < 2.0:
+            continue
         if profit > best_profit:
             best_profit, best = profit, (ts, tt)
             wins = (sel.outcome == "win").sum()

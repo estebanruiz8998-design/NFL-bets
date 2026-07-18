@@ -86,9 +86,11 @@ class EloModel:
         )
         outcome = 0.5 if result == 0 else (1.0 if result > 0 else 0.0)
         # Margin-of-victory multiplier (538 formula): big wins move ratings more,
-        # damped when the favorite wins big (autocorrelation guard).
-        winner_diff = diff if result > 0 else -diff
-        mov = math.log(abs(result) + 1.0) * (2.2 / (winner_diff * 0.001 + 2.2))
+        # damped when the favorite wins big (autocorrelation guard). Ties use
+        # log(max(|margin|,1)+1) with no damping so the favorite is pulled
+        # toward parity rather than the update silently zeroing out.
+        winner_diff = diff if result > 0 else (-diff if result < 0 else 0.0)
+        mov = math.log(max(abs(result), 1.0) + 1.0) * (2.2 / (winner_diff * 0.001 + 2.2))
         delta = self.cfg.elo_k * mov * (outcome - win_prob)
         self.ratings[home] += delta
         self.ratings[away] -= delta
