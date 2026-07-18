@@ -371,7 +371,6 @@
     </div>
 
     <div class="table-scroll"><table class="data" id="iter-table">
-      <caption class="sr-only"></caption>
       <thead><tr><th>Iteration</th><th>Change</th><th>Train ROI</th><th>Validation ROI</th><th>Verdict</th></tr></thead>
       <tbody></tbody>
     </table></div>
@@ -567,6 +566,8 @@ document.getElementById("slip-week1-cond").innerHTML = SLIP_W1_COND.map(slipRow)
 const state = { week: "ALL", tier: "PLAY", sort: "date", q: "" };
 const fmtSigned = x => (x > 0 ? "+" : "") + x.toFixed(1);
 const fmtSpread = s => s === 0 ? "PK" : (s > 0 ? "−" + s : "+" + (-s)); // home perspective
+const fmtTotal = t => Number.isFinite(t) ? t : "—";
+const fmtMl = v => v == null || !Number.isFinite(v) ? "—" : (v > 0 ? "+" + v : String(v));
 
 function statCards() {
   const g = DATA.games;
@@ -583,16 +584,22 @@ function statCards() {
 function weekChips() {
   const weeks = [...new Set(DATA.games.map(g => g.week))].sort((a, b) => a - b);
   const el = document.getElementById("week-chips");
-  el.innerHTML = "";
+  const sync = () => el.querySelectorAll("button").forEach(b => {
+    const on = String(state.week) === b.dataset.week;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", on);
+  });
   const mk = (label, val) => {
     const b = document.createElement("button");
-    b.className = "chip" + (state.week === val ? " on" : "");
+    b.className = "chip";
+    b.dataset.week = String(val);
     b.textContent = label;
-    b.addEventListener("click", () => { state.week = val; weekChips(); renderBoard(); });
+    b.addEventListener("click", () => { state.week = val; sync(); renderBoard(); });
     el.appendChild(b);
   };
   mk("All", "ALL");
   weeks.forEach(w => mk("Wk " + w, w));
+  sync();
 }
 
 function tierNote(g) {
@@ -627,8 +634,8 @@ function renderBoard() {
       <button class="row" aria-expanded="false">
         <span class="g-date"><b>Wk ${x.week}</b>${x.date.slice(5)}</span>
         <span class="g-match">${x.away}<span class="at">@</span>${x.home}${x.neutral ? "<span class='g-sub'>neutral site</span>" : ""}</span>
-        <span class="g-num"><span class="lbl">Market</span>${x.home} ${fmtSpread(x.spread)} · ${x.total}</span>
-        <span class="g-num"><span class="lbl">Model</span>${x.home} ${fmtSpread(x.modelMargin)} · ${x.modelTotal}</span>
+        <span class="g-num"><span class="lbl">Market</span>${x.home} ${fmtSpread(x.spread)} · ${fmtTotal(x.total)}</span>
+        <span class="g-num"><span class="lbl">Model</span>${x.home} ${fmtSpread(x.modelMargin)} · ${fmtTotal(x.modelTotal)}</span>
         <span class="edge-meter"><span class="edge-track"><span class="edge-fill" style="${fillStyle}"></span></span><span class="edge-val">edge ${fmtSigned(x.rawEdge)}</span></span>
         <span class="g-bet"><span class="bet-label">${x.bet}</span><span class="pill ${x.tier}">${x.tier}</span></span>
       </button>
@@ -640,8 +647,8 @@ function renderBoard() {
           <div><dt>Kelly stake</dt><dd>${x.stake ? x.stake.toFixed(2) + "% BR" : "—"}</dd></div>
           <div><dt>Model margin</dt><dd>${x.home} ${fmtSigned(x.modelMargin)}</dd></div>
           <div><dt>Spread edge</dt><dd>${fmtSigned(x.rawEdge)} pts</dd></div>
-          <div><dt>Total edge</dt><dd>${fmtSigned(x.rawTotalEdge)} pts</dd></div>
-          <div><dt>Moneyline</dt><dd>${x.hml == null ? "—" : (x.aml > 0 ? "+" + x.aml : x.aml) + " / " + (x.hml > 0 ? "+" + x.hml : x.hml)}</dd></div>
+          <div><dt>Total edge</dt><dd>${Number.isFinite(x.rawTotalEdge) ? fmtSigned(x.rawTotalEdge) + " pts" : "—"}</dd></div>
+          <div><dt>Moneyline</dt><dd>${x.hml == null && x.aml == null ? "—" : fmtMl(x.aml) + " / " + fmtMl(x.hml)}</dd></div>
         </dl>
         <p>${tierNote(x)}</p>
       </div>`;

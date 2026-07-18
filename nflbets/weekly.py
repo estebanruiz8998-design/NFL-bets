@@ -50,10 +50,11 @@ def card_rows(cfg: Config, games: pd.DataFrame, slate: pd.DataFrame) -> list[dic
         cands = strategy.candidates(cfg, row, pred_margin, pred_total)
         best, tier = strategy.best_bet(cfg, cands)
         anch_m, anch_t = strategy.anchored(cfg, row, pred_margin, pred_total)
+        total_txt = f"{row.total_line:g}" if pd.notna(row.total_line) else "—"
         rows.append({
             "date": str(row.gameday.date()),
             "matchup": f"{row.away_team} @ {row.home_team}",
-            "market": f"{row.home_team} {-row.spread_line:+g} / {row.total_line:g}",
+            "market": f"{row.home_team} {-row.spread_line:+g} / {total_txt}",
             "model_margin": anch_m,
             "model_total": anch_t,
             "raw_edge": pred_margin - row.spread_line,
