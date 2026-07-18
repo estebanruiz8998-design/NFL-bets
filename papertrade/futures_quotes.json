@@ -7,6 +7,16 @@
     "fut-chi-north": 320,
     "fut-den-west": 225,
     "fut-chi-sb": 2500,
-    "fut-min-sb": 5000
+    "fut-min-sb": 5000,
+    "f2-mia-u45": {
+      "odds": -130,
+      "line": 4.5
+    },
+    "f2-lar-o115": {
+      "odds": 100,
+      "line": 11.5
+    },
+    "f2-maye-mvp": 1100,
+    "f2-jsn-opoy": 1500
   }
 }

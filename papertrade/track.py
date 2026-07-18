@@ -77,11 +77,15 @@ def main() -> None:
     for pos in ledger["positions"]:
         row = {"snap_date": snap_date, "position_id": pos["id"], "status": pos["status"],
                "current_line": "", "current_odds": "", "clv_points": "", "clv_prob_pp": ""}
-        if pos["type"] == "futures":
+        if pos["type"] in ("futures", "wintotal"):
             cur = latest_quotes.get(pos["id"])
             if cur is not None:
-                row["current_odds"] = cur
-                row["clv_prob_pp"] = round(implied(cur) - implied(pos["entry_odds"]), 2)
+                odds = cur["odds"] if isinstance(cur, dict) else cur
+                row["current_odds"] = odds
+                row["clv_prob_pp"] = round(implied(odds) - implied(pos["entry_odds"]), 2)
+                if isinstance(cur, dict) and "line" in cur:
+                    row["current_line"] = cur["line"]
+                    row["clv_points"] = round(clv_points(pos, cur["line"]), 1)
         else:
             game = g26.loc[pos["game_id"]]
             spread, total = float(game.spread_line), float(game.total_line)

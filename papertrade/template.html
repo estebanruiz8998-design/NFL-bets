@@ -97,6 +97,12 @@
 
   <div class="stats" id="tiles"></div>
 
+  <h3 class="sec">Experiment arms <span class="note">— competing hypotheses entered side by side; kickoff CLV decides which philosophy the market agreed with</span></h3>
+  <div class="table-scroll" style="margin-bottom:22px"><table class="data">
+    <thead><tr><th>Arm</th><th>Thesis</th><th>Positions</th><th>Stake</th><th>CLV now</th></tr></thead>
+    <tbody id="arms-body"></tbody>
+  </table></div>
+
   <div class="chart">
     <h3>Portfolio CLV over time — stake-weighted, game lines (points)</h3>
     <p class="note">Positive = the market has moved toward our entries since July 18. One point per snapshot; final grading at kickoff closings.</p>
@@ -105,13 +111,13 @@
 
   <h3 class="sec">Game positions <span class="note">— reference book: nflverse consensus; conditions auto-enter when met</span></h3>
   <div class="table-scroll"><table class="data">
-    <thead><tr><th>Position</th><th>Status</th><th>Entry</th><th>Now</th><th>CLV (pts)</th><th>Stake</th><th>Note</th></tr></thead>
+    <thead><tr><th>Arm</th><th>Position</th><th>Status</th><th>Entry</th><th>Now</th><th>CLV (pts)</th><th>Stake</th><th>Note</th></tr></thead>
     <tbody id="games-body"></tbody>
   </table></div>
 
-  <h3 class="sec">Futures positions <span class="note">— quotes re-sourced from the odds market at each check-in; CLV in implied-probability points</span></h3>
+  <h3 class="sec">Futures &amp; season props <span class="note">— quotes re-sourced from the odds market at each check-in; CLV in implied-probability points</span></h3>
   <div class="table-scroll"><table class="data">
-    <thead><tr><th>Position</th><th>Entry</th><th>Now</th><th>CLV (prob pp)</th><th>Stake</th><th>Book at entry</th></tr></thead>
+    <thead><tr><th>Arm</th><th>Position</th><th>Entry</th><th>Now</th><th>CLV (prob pp)</th><th>Stake</th><th>Book at entry</th></tr></thead>
     <tbody id="futures-body"></tbody>
   </table></div>
 
@@ -154,6 +160,9 @@ document.getElementById("gen-date").textContent = STATE.generated;
 
 const POS = STATE.ledger.positions;
 const HIST = STATE.history || {};
+const ARMS = STATE.ledger.arms || {};
+const ARM_LETTER = { slip: "A", contra: "B", unders: "U", model: "M", futures2: "F" };
+const armChip = a => `<span style="font:700 11px var(--mono);color:var(--ink3)">${ARM_LETTER[a] || a}</span>`;
 const latest = id => { const h = HIST[id] || []; return h.length ? h[h.length - 1] : null; };
 const fmtLine = (v, type, side) => {
   if (v === "" || v == null) return "—";
@@ -230,10 +239,38 @@ const clvCell = v => {
   document.getElementById("clv-chart").innerHTML = svg;
 })();
 
+// arms summary
+(function armsTable() {
+  const order = ["slip", "contra", "unders", "model", "futures2"];
+  document.getElementById("arms-body").innerHTML = order.filter(a => POS.some(p => p.arm === a)).map(a => {
+    const ps = POS.filter(p => p.arm === a);
+    let wpts = 0, wspts = 0, wpp = 0, wspp = 0;
+    for (const p of ps.filter(x => x.status === "entered")) {
+      const l = latest(p.id);
+      if (!l) continue;
+      if (l.clv_points !== "" && (p.type === "spread" || p.type === "total")) { wpts += p.stake * parseFloat(l.clv_points); wspts += p.stake; }
+      if (l.clv_prob_pp !== "") { wpp += p.stake * parseFloat(l.clv_prob_pp); wspp += p.stake; }
+    }
+    const parts = [];
+    if (wspts) parts.push(`${clvCell((wpts / wspts).toFixed(2))} pts`);
+    if (wspp) parts.push(`${clvCell((wpp / wspp).toFixed(1))} pp`);
+    const stake = ps.reduce((s, p) => s + p.stake, 0);
+    return `<tr>
+      <td class="num"><b>${ARM_LETTER[a]}</b></td>
+      <td class="wrap" style="max-width:420px">${(ARMS[a] || a).replace(/^[A-Z] — /, "")}</td>
+      <td class="num">${ps.length}</td>
+      <td class="num">${stake.toFixed(2)}u</td>
+      <td class="num">${parts.join(" · ") || "—"}</td>
+    </tr>`;
+  }).join("");
+})();
+
 // tables
-document.getElementById("games-body").innerHTML = POS.filter(p => p.type !== "futures").map(p => {
+const isGame = p => p.type === "spread" || p.type === "total";
+document.getElementById("games-body").innerHTML = POS.filter(isGame).map(p => {
   const l = latest(p.id);
   return `<tr>
+    <td class="num">${armChip(p.arm)}</td>
     <td class="wrap">${p.bet}</td>
     <td><span class="chipst ${p.status}">${p.status}</span></td>
     <td class="num">${p.entry_line != null ? fmtLine(p.entry_line, p.type, p.side) : "—"}</td>
@@ -244,13 +281,24 @@ document.getElementById("games-body").innerHTML = POS.filter(p => p.type !== "fu
   </tr>`;
 }).join("");
 
-document.getElementById("futures-body").innerHTML = POS.filter(p => p.type === "futures").map(p => {
+document.getElementById("futures-body").innerHTML = POS.filter(p => !isGame(p)).map(p => {
   const l = latest(p.id);
+  const wt = p.type === "wintotal";
+  const entry = wt ? `${p.side === "over" ? "O" : "U"} ${p.entry_line} ${fmtOdds(p.entry_odds)}` : fmtOdds(p.entry_odds);
+  let now = "—";
+  if (l && l.current_odds !== "") {
+    now = wt && l.current_line !== ""
+      ? `${p.side === "over" ? "O" : "U"} ${l.current_line} ${fmtOdds(parseFloat(l.current_odds))}`
+      : fmtOdds(parseFloat(l.current_odds));
+  }
+  let clv = l ? clvCell(l.clv_prob_pp) : "—";
+  if (wt && l && l.clv_points !== "" && parseFloat(l.clv_points) !== 0) clv += ` <small style="color:var(--ink3)">(${parseFloat(l.clv_points) > 0 ? "+" : ""}${l.clv_points} pts)</small>`;
   return `<tr>
+    <td class="num">${armChip(p.arm)}</td>
     <td class="wrap">${p.bet}</td>
-    <td class="num">${fmtOdds(p.entry_odds)}</td>
-    <td class="num">${l ? fmtOdds(l.current_odds === "" ? null : parseFloat(l.current_odds)) : "—"}</td>
-    <td class="num">${l ? clvCell(l.clv_prob_pp) : "—"}</td>
+    <td class="num">${entry}</td>
+    <td class="num">${now}</td>
+    <td class="num">${clv}</td>
     <td class="num">${p.stake}u</td>
     <td style="color:var(--ink3)">${p.book}</td>
   </tr>`;
