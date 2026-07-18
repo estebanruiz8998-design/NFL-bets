@@ -8,7 +8,8 @@ A model + orchestration pipeline that, for every NFL game, finds the best availa
 
 | Piece | File(s) |
 |-------|---------|
-| **Weekly best-bet card** (the product) | `python -m nflbets.weekly` → [cards/](cards/) |
+| **Interactive dashboard** (the product) | [dashboard/index.html](dashboard/index.html) — rebuild with `python dashboard/build.py` |
+| **Weekly best-bet card** (CLI version) | `python -m nflbets.weekly` → [cards/](cards/) |
 | Model + strategy package | [`nflbets/`](nflbets/) |
 | Walk-forward backtester | `python -m nflbets.backtest` |
 | Tuner (train 2008–19, validate 2020–25) | `python -m nflbets.tune` → [`config/champion.json`](config/champion.json) |
