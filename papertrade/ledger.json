@@ -1,0 +1,25 @@
+{
+  "created": "2026-07-18",
+  "note": "Paper trade of the July 2026 slip. No real money. Entry prices are the slip's quoted prices; nflverse is the reference book for game lines. Conditional positions auto-enter when their line condition is met at a snapshot; 'watch' positions require a manual decision.",
+  "unit": "1u = 1% of a nominal bankroll",
+  "positions": [
+    {"id": "fut-cin-north", "type": "futures", "bet": "Bengals to win AFC North", "entry_odds": 200, "stake": 1.0, "status": "entered", "entry_date": "2026-07-18", "book": "BetMGM"},
+    {"id": "fut-ne-east", "type": "futures", "bet": "Patriots to win AFC East", "entry_odds": 120, "stake": 1.0, "status": "entered", "entry_date": "2026-07-18", "book": "DraftKings"},
+    {"id": "fut-buf-sb", "type": "futures", "bet": "Bills to win Super Bowl LXI", "entry_odds": 1000, "stake": 1.0, "status": "entered", "entry_date": "2026-07-18", "book": "DraftKings"},
+    {"id": "fut-ne-afc", "type": "futures", "bet": "Patriots to win AFC", "entry_odds": 850, "stake": 0.5, "status": "entered", "entry_date": "2026-07-18", "book": "BetMGM"},
+    {"id": "fut-chi-north", "type": "futures", "bet": "Bears to win NFC North", "entry_odds": 320, "stake": 0.5, "status": "entered", "entry_date": "2026-07-18", "book": "FanDuel"},
+    {"id": "fut-den-west", "type": "futures", "bet": "Broncos to win AFC West", "entry_odds": 225, "stake": 0.5, "status": "entered", "entry_date": "2026-07-18", "book": "DraftKings"},
+    {"id": "fut-chi-sb", "type": "futures", "bet": "Bears to win Super Bowl LXI", "entry_odds": 2500, "stake": 0.25, "status": "entered", "entry_date": "2026-07-18", "book": "BetMGM"},
+    {"id": "fut-min-sb", "type": "futures", "bet": "Vikings to win Super Bowl LXI", "entry_odds": 5000, "stake": 0.25, "status": "entered", "entry_date": "2026-07-18", "book": "BetMGM"},
+
+    {"id": "w1-den-kc", "type": "spread", "bet": "Broncos +2.5 at Chiefs (Wk 1)", "game_id": "2026_01_DEN_KC", "side": "DEN", "entry_line": 2.5, "stake": 0.25, "status": "entered", "entry_date": "2026-07-18"},
+    {"id": "w1-sea-ne", "type": "spread", "bet": "Seahawks −3.5 vs Patriots (opener)", "game_id": "2026_01_NE_SEA", "side": "SEA", "entry_line": -3.5, "stake": 0.25, "status": "entered", "entry_date": "2026-07-18"},
+    {"id": "lean-ten-over", "type": "total", "bet": "NYJ@TEN Over 39.5 (Wk 1, model LEAN)", "game_id": "2026_01_NYJ_TEN", "side": "over", "entry_line": 39.5, "stake": 0.1, "status": "entered", "entry_date": "2026-07-18"},
+    {"id": "lean-mia-kc", "type": "spread", "bet": "MIA +7 vs Chiefs (Wk 3, model LEAN)", "game_id": "2026_03_KC_MIA", "side": "MIA", "entry_line": 7.0, "stake": 0.1, "status": "entered", "entry_date": "2026-07-18"},
+
+    {"id": "w1-jax-cle", "type": "spread", "bet": "Jaguars −7 vs Browns (Wk 1)", "game_id": "2026_01_CLE_JAX", "side": "JAX", "stake": 0.25, "status": "waiting", "condition": "spread_line <= 7.0", "condition_note": "slip rule: flat −7 only, skip at −7.5 (currently −7.5)"},
+    {"id": "w1-sf-la", "type": "spread", "bet": "49ers +3.5 vs Rams, Melbourne (Wk 1)", "game_id": "2026_01_SF_LA", "side": "SF", "stake": 0.25, "status": "waiting", "condition": "spread_line >= 3.5", "condition_note": "slip rule: +3.5 or better (nflverse shows +3.0 today)"},
+    {"id": "w1-phi-was", "type": "spread", "bet": "Eagles −5 vs Commanders (Wk 1)", "game_id": "2026_01_WAS_PHI", "side": "PHI", "stake": 0.25, "status": "waiting", "condition": "spread_line <= 5.0", "condition_note": "slip rule: only at −5 or shorter (currently −5.5)"},
+    {"id": "w1-min-gb", "type": "spread", "bet": "Vikings +1.5 vs Packers (Wk 1)", "game_id": "2026_01_GB_MIN", "side": "MIN", "stake": 0.25, "status": "watch", "condition": "manual", "condition_note": "enter only if Kyler Murray looks functional in August preseason tape"}
+  ]
+}

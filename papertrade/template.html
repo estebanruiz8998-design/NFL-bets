@@ -1,0 +1,258 @@
+<title>NFL Bets — 2026 Paper Trade</title>
+<style>
+  :root {
+    --bg: #F5F6F2; --surface: #FFFFFF; --surface2: #EDEFE9;
+    --ink: #171B18; --ink2: #4A524C; --ink3: #7A837C; --line: #DDE1DA;
+    --accent: #1F7A4D; --accent-soft: #E2F0E8;
+    --amber: #9A6A1F; --amber-soft: #F4EAD6;
+    --gray: #7A837C; --gray-soft: #ECEEE9;
+    --neg: #C4554D; --neg-soft: #F6E4E2;
+    --pos: #4077B8;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #101613; --surface: #17201B; --surface2: #1D2721;
+      --ink: #E8ECE7; --ink2: #A9B3AB; --ink3: #78827A; --line: #28332C;
+      --accent: #3FAE76; --accent-soft: #1B3226; --amber: #D2A24C; --amber-soft: #33290F;
+      --gray: #8A948C; --gray-soft: #222B25; --neg: #D06A5F; --neg-soft: #38201D; --pos: #5089C6; }
+  }
+  :root[data-theme="dark"] { --bg: #101613; --surface: #17201B; --surface2: #1D2721;
+    --ink: #E8ECE7; --ink2: #A9B3AB; --ink3: #78827A; --line: #28332C;
+    --accent: #3FAE76; --accent-soft: #1B3226; --amber: #D2A24C; --amber-soft: #33290F;
+    --gray: #8A948C; --gray-soft: #222B25; --neg: #D06A5F; --neg-soft: #38201D; --pos: #5089C6; }
+  :root[data-theme="light"] { --bg: #F5F6F2; --surface: #FFFFFF; --surface2: #EDEFE9;
+    --ink: #171B18; --ink2: #4A524C; --ink3: #7A837C; --line: #DDE1DA;
+    --accent: #1F7A4D; --accent-soft: #E2F0E8; --amber: #9A6A1F; --amber-soft: #F4EAD6;
+    --gray: #7A837C; --gray-soft: #ECEEE9; --neg: #C4554D; --neg-soft: #F6E4E2; --pos: #4077B8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px 64px; }
+  header.top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .top-inner { max-width: 1040px; margin: 0 auto; padding: 14px 20px 12px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
+  .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 19px; }
+  .brand .tag { color: var(--amber); }
+  .countdown { font-family: var(--mono); font-size: 12.5px; color: var(--ink2); margin-left: auto; }
+  .countdown b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .eyebrow { font: 600 11px var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin: 24px 0 6px; }
+  h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px; text-wrap: balance; }
+  .sub { color: var(--ink2); margin: 0 0 20px; max-width: 70ch; }
+  .banner { background: var(--amber-soft); color: var(--amber); border-radius: 10px; padding: 10px 16px; font-weight: 650; font-size: 13.5px; margin: 18px 0 0; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 0 0 22px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+  .stat .k { font: 600 11px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); }
+  .stat .v { font: 700 22px/1.2 var(--mono); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .stat .v small { font-size: 12px; font-weight: 500; color: var(--ink2); }
+  .stat .v .up { color: var(--pos); } .stat .v .down { color: var(--neg); }
+  h3.sec { font-size: 15px; font-weight: 750; margin: 24px 0 10px; }
+  h3.sec .note { font-weight: 500; color: var(--ink3); font-size: 12.5px; }
+  table.data { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  .table-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  table.data th, table.data td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  table.data td.wrap { white-space: normal; }
+  table.data tr:last-child td { border-bottom: 0; }
+  table.data th { font: 600 11px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); }
+  table.data td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .clv-pos { color: var(--pos); font-weight: 700; }
+  .clv-neg { color: var(--neg); font-weight: 700; }
+  .clv-zero { color: var(--ink3); font-weight: 600; }
+  .chipst { font: 700 10px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; }
+  .chipst.entered { background: var(--accent-soft); color: var(--accent); }
+  .chipst.waiting { background: var(--amber-soft); color: var(--amber); }
+  .chipst.watch { background: var(--gray-soft); color: var(--gray); }
+  .chart { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px 12px; margin: 22px 0; }
+  .chart h3 { margin: 0 0 2px; font-size: 15px; }
+  .chart .note { font-size: 12.5px; color: var(--ink3); margin: 0 0 12px; }
+  .chart svg { width: 100%; height: auto; display: block; }
+  .chart .axis { stroke: var(--line); stroke-width: 1; }
+  .chart .series { stroke: var(--pos); stroke-width: 2; fill: none; }
+  .chart .dot { fill: var(--pos); }
+  .chart .dot.end { r: 5; }
+  .chart text { font: 600 11px var(--mono); fill: var(--ink3); }
+  .chart text.val { fill: var(--ink2); }
+  .callout { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); border-radius: 10px; padding: 16px 18px; margin: 22px 0 0; max-width: 84ch; }
+  .callout.warn { border-left-color: var(--amber); }
+  .callout h3 { margin: 0 0 6px; font-size: 15px; }
+  .callout p { margin: 0; color: var(--ink2); font-size: 14px; }
+  .foot { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--ink3); font-size: 12.5px; max-width: 84ch; }
+  .foot b { color: var(--ink2); }
+  code { font-family: var(--mono); font-size: 0.92em; background: var(--surface2); padding: 1px 5px; border-radius: 4px; }
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">NFL BETS <span class="tag">/ PAPER TRADE</span></div>
+    <div class="countdown" id="countdown"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="banner">PAPER MONEY ONLY — this is a live verification of the July slip, not real bets. Verdict lands at kickoff, Sept 9.</div>
+
+  <p class="eyebrow">Live experiment &middot; entered July 18, 2026 &middot; updated twice weekly</p>
+  <h2>Does the slip beat the market before kickoff?</h2>
+  <p class="sub">Every position was entered on paper at the slip&rsquo;s quoted price. Twice a week we snapshot where the market has moved.
+    If our entries systematically hold <b>positive closing-line value</b> (the market moved toward our positions), the strategy&rsquo;s timing
+    has real-world value the historical backtest couldn&rsquo;t measure. If CLV is flat or negative, the honest verdict stands: no edge.</p>
+
+  <div class="stats" id="tiles"></div>
+
+  <div class="chart">
+    <h3>Portfolio CLV over time — stake-weighted, game lines (points)</h3>
+    <p class="note">Positive = the market has moved toward our entries since July 18. One point per snapshot; final grading at kickoff closings.</p>
+    <div id="clv-chart"></div>
+  </div>
+
+  <h3 class="sec">Game positions <span class="note">— reference book: nflverse consensus; conditions auto-enter when met</span></h3>
+  <div class="table-scroll"><table class="data">
+    <thead><tr><th>Position</th><th>Status</th><th>Entry</th><th>Now</th><th>CLV (pts)</th><th>Stake</th><th>Note</th></tr></thead>
+    <tbody id="games-body"></tbody>
+  </table></div>
+
+  <h3 class="sec">Futures positions <span class="note">— quotes re-sourced from the odds market at each check-in; CLV in implied-probability points</span></h3>
+  <div class="table-scroll"><table class="data">
+    <thead><tr><th>Position</th><th>Entry</th><th>Now</th><th>CLV (prob pp)</th><th>Stake</th><th>Book at entry</th></tr></thead>
+    <tbody id="futures-body"></tbody>
+  </table></div>
+
+  <div class="callout warn">
+    <h3>How to read this honestly</h3>
+    <p>CLV measures whether our <i>prices</i> beat the market&rsquo;s later prices — the standard professional proxy for edge, and the only one
+       available before games are played. It is a noisy, small-sample signal over one summer: a few points of positive CLV is encouraging,
+       not proof; negative CLV is a cheap early warning. Week&nbsp;1 spread positions get their final CLV against actual closing lines on
+       Sept&nbsp;9&ndash;14, and then real results when the games finish. The futures can&rsquo;t be graded until winter — for them this page only
+       ever shows price movement.</p>
+  </div>
+
+  <div class="callout">
+    <h3>Reproduce / audit</h3>
+    <p>Ledger, every snapshot, and this page&rsquo;s builder live in the repo: <code>papertrade/ledger.json</code>,
+       <code>papertrade/snapshots.csv</code>, <code>papertrade/track.py</code>, <code>papertrade/build.py</code>.
+       Each check-in is committed, so the history is tamper-evident in git.</p>
+  </div>
+
+  <footer class="foot">
+    <b>No real money is at stake on this page.</b> The underlying strategy's backtest verdict is "no demonstrated edge" — this experiment
+    is the forward test of that verdict. If you choose to bet real money anyway: 1-800-GAMBLER.
+    Last snapshot: <span id="gen-date"></span> · Data: nflverse + web-sourced futures quotes.
+  </footer>
+</div>
+
+<script>
+const STATE = /*__STATE__*/;
+
+function tickCountdown() {
+  const kick = new Date("2026-09-10T00:20:00Z");
+  const ms = kick - new Date();
+  const el = document.getElementById("countdown");
+  if (ms <= 0) { el.innerHTML = "<b>Season is live — final grading in progress</b>"; return; }
+  const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
+  el.innerHTML = `VERDICT AT KICKOFF in <b>${d}d ${h}h</b>`;
+}
+tickCountdown(); setInterval(tickCountdown, 60000);
+document.getElementById("gen-date").textContent = STATE.generated;
+
+const POS = STATE.ledger.positions;
+const HIST = STATE.history || {};
+const latest = id => { const h = HIST[id] || []; return h.length ? h[h.length - 1] : null; };
+const fmtLine = (v, type, side) => {
+  if (v === "" || v == null) return "—";
+  const x = parseFloat(v);
+  if (type === "total") return (side === "over" ? "O " : "U ") + x;
+  return (x > 0 ? "+" : "") + x;
+};
+const fmtOdds = v => v === "" || v == null ? "—" : (v > 0 ? "+" + v : String(v));
+const clvCell = v => {
+  if (v === "" || v == null || isNaN(parseFloat(v))) return `<span class="clv-zero">—</span>`;
+  const x = parseFloat(v);
+  const cls = x > 0 ? "clv-pos" : x < 0 ? "clv-neg" : "clv-zero";
+  return `<span class="${cls}">${x > 0 ? "+" : ""}${x}</span>`;
+};
+
+// tiles
+(function tiles() {
+  const games = POS.filter(p => p.type !== "futures");
+  const futs = POS.filter(p => p.type === "futures");
+  const entered = POS.filter(p => p.status === "entered");
+  let wclv = 0, wstake = 0;
+  for (const p of games.filter(x => x.status === "entered")) {
+    const l = latest(p.id);
+    if (l && l.clv_points !== "") { wclv += p.stake * parseFloat(l.clv_points); wstake += p.stake; }
+  }
+  const port = wstake ? (wclv / wstake) : 0;
+  let fclv = 0, fstake = 0;
+  for (const p of futs) {
+    const l = latest(p.id);
+    if (l && l.clv_prob_pp !== "") { fclv += p.stake * parseFloat(l.clv_prob_pp); fstake += p.stake; }
+  }
+  const fport = fstake ? (fclv / fstake) : null;
+  const snaps = Math.max(...Object.values(HIST).map(h => h.length), 0);
+  const cls = v => v > 0.05 ? "up" : v < -0.05 ? "down" : "";
+  document.getElementById("tiles").innerHTML = `
+    <div class="stat"><div class="k">Positions</div><div class="v">${POS.length}<small> · ${entered.length} entered</small></div></div>
+    <div class="stat"><div class="k">Game-line CLV</div><div class="v"><span class="${cls(port)}">${port > 0 ? "+" : ""}${port.toFixed(2)}</span><small> pts (stake-wtd)</small></div></div>
+    <div class="stat"><div class="k">Futures CLV</div><div class="v">${fport == null ? "—" : `<span class="${cls(fport)}">${fport > 0 ? "+" : ""}${fport.toFixed(1)}</span>`}<small> prob pp</small></div></div>
+    <div class="stat"><div class="k">Snapshots</div><div class="v">${snaps}<small> since Jul 18</small></div></div>
+    <div class="stat"><div class="k">Waiting on price</div><div class="v">${POS.filter(p => p.status === "waiting").length}<small> + ${POS.filter(p => p.status === "watch").length} watch</small></div></div>`;
+})();
+
+// portfolio CLV series (stake-weighted game lines per snapshot date)
+(function chart() {
+  const dates = [...new Set([].concat(...Object.values(HIST)).map(r => r.snap_date))].sort();
+  const series = dates.map(dt => {
+    let wclv = 0, wstake = 0;
+    for (const p of POS.filter(x => x.type !== "futures")) {
+      const row = (HIST[p.id] || []).filter(r => r.snap_date === dt).pop();
+      if (row && row.clv_points !== "" && row.status === "entered") {
+        wclv += p.stake * parseFloat(row.clv_points); wstake += p.stake;
+      }
+    }
+    return { dt, v: wstake ? wclv / wstake : 0 };
+  });
+  const W = 900, H = 220, padL = 40, padR = 60, padY = 30;
+  const n = series.length;
+  const vs = series.map(s => s.v);
+  const vmax = Math.max(0.5, ...vs.map(Math.abs));
+  const x = i => n === 1 ? W / 2 : padL + i * (W - padL - padR) / (n - 1);
+  const y = v => H / 2 - (v / vmax) * (H / 2 - padY);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Portfolio CLV over time">`;
+  svg += `<line class="axis" x1="0" y1="${H/2}" x2="${W}" y2="${H/2}"></line>`;
+  if (n > 1) svg += `<polyline class="series" points="${series.map((s, i) => `${x(i)},${y(s.v)}`).join(" ")}"></polyline>`;
+  series.forEach((s, i) => {
+    const last = i === n - 1;
+    svg += `<circle class="dot${last ? " end" : ""}" cx="${x(i)}" cy="${y(s.v)}" r="${last ? 5 : 3.5}"></circle>`;
+    if (last || n <= 6) {
+      svg += `<text class="val" x="${x(i)}" y="${y(s.v) - 10}" text-anchor="middle">${s.v > 0 ? "+" : ""}${s.v.toFixed(2)}</text>`;
+      svg += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle">${s.dt.slice(5)}</text>`;
+    }
+  });
+  svg += `</svg>`;
+  document.getElementById("clv-chart").innerHTML = svg;
+})();
+
+// tables
+document.getElementById("games-body").innerHTML = POS.filter(p => p.type !== "futures").map(p => {
+  const l = latest(p.id);
+  return `<tr>
+    <td class="wrap">${p.bet}</td>
+    <td><span class="chipst ${p.status}">${p.status}</span></td>
+    <td class="num">${p.entry_line != null ? fmtLine(p.entry_line, p.type, p.side) : "—"}</td>
+    <td class="num">${l ? fmtLine(l.current_line, p.type, p.side) : "—"}</td>
+    <td class="num">${l ? clvCell(l.clv_points) : "—"}</td>
+    <td class="num">${p.stake}u</td>
+    <td class="wrap" style="color:var(--ink3);font-size:12.5px">${p.condition_note || (p.entry_date ? "entered " + p.entry_date : "")}</td>
+  </tr>`;
+}).join("");
+
+document.getElementById("futures-body").innerHTML = POS.filter(p => p.type === "futures").map(p => {
+  const l = latest(p.id);
+  return `<tr>
+    <td class="wrap">${p.bet}</td>
+    <td class="num">${fmtOdds(p.entry_odds)}</td>
+    <td class="num">${l ? fmtOdds(l.current_odds === "" ? null : parseFloat(l.current_odds)) : "—"}</td>
+    <td class="num">${l ? clvCell(l.clv_prob_pp) : "—"}</td>
+    <td class="num">${p.stake}u</td>
+    <td style="color:var(--ink3)">${p.book}</td>
+  </tr>`;
+}).join("");
+</script>

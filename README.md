@@ -13,6 +13,7 @@ A model + orchestration pipeline that, for every NFL game, finds the best availa
 | Model + strategy package | [`nflbets/`](nflbets/) |
 | Walk-forward backtester | `python -m nflbets.backtest` |
 | Tuner (train 2008–19, validate 2020–25) | `python -m nflbets.tune` → [`config/champion.json`](config/champion.json) |
+| **Paper trade** (live forward test until kickoff) | [papertrade/](papertrade/) — ledger, snapshots, tracker, dashboard |
 | **Strategy verdict** (read this first) | [research/strategy-verdict.md](research/strategy-verdict.md) |
 | **Backtest report** (methodology + iteration log) | [backtest-report.md](backtest-report.md) |
 | Season futures analysis (July 2026) | [futures-2026.md](futures-2026.md) |
