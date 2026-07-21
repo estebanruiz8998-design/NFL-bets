@@ -18,5 +18,25 @@
     },
     "f2-maye-mvp": 1100,
     "f2-jsn-opoy": 1500
+  },
+  "2026-07-21": {
+    "fut-cin-north": 210,
+    "fut-ne-east": 130,
+    "fut-buf-sb": 1000,
+    "fut-ne-afc": 800,
+    "fut-chi-north": 320,
+    "fut-den-west": 225,
+    "fut-chi-sb": 2500,
+    "fut-min-sb": 5000,
+    "f2-mia-u45": {
+      "odds": -130,
+      "line": 4.5
+    },
+    "f2-lar-o115": {
+      "odds": 100,
+      "line": 11.5
+    },
+    "f2-maye-mvp": 925,
+    "f2-jsn-opoy": 1500
   }
 }

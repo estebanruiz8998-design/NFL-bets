@@ -158,10 +158,12 @@
       "game_id": "2026_01_SF_LA",
       "side": "SF",
       "stake": 0.25,
-      "status": "waiting",
+      "status": "entered",
       "condition": "spread_line >= 3.5",
       "condition_note": "slip rule: +3.5 or better (nflverse shows +3.0 today)",
-      "arm": "slip"
+      "arm": "slip",
+      "entry_date": "2026-07-21",
+      "entry_line": 3.5
     },
     {
       "id": "w1-phi-was",
@@ -170,10 +172,12 @@
       "game_id": "2026_01_WAS_PHI",
       "side": "PHI",
       "stake": 0.25,
-      "status": "waiting",
+      "status": "entered",
       "condition": "spread_line <= 5.0",
       "condition_note": "slip rule: only at \u22125 or shorter (currently \u22125.5)",
-      "arm": "slip"
+      "arm": "slip",
+      "entry_date": "2026-07-21",
+      "entry_line": -4.5
     },
     {
       "id": "w1-min-gb",
