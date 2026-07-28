@@ -167,6 +167,7 @@ const latest = id => { const h = HIST[id] || []; return h.length ? h[h.length - 
 const fmtLine = (v, type, side) => {
   if (v === "" || v == null) return "—";
   const x = parseFloat(v);
+  if (!Number.isFinite(x)) return "—";
   if (type === "total") return (side === "over" ? "O " : "U ") + x;
   return (x > 0 ? "+" : "") + x;
 };

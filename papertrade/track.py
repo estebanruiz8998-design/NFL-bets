@@ -87,8 +87,15 @@ def main() -> None:
                     row["current_line"] = cur["line"]
                     row["clv_points"] = round(clv_points(pos, cur["line"]), 1)
         else:
+            import math
             game = g26.loc[pos["game_id"]]
             spread, total = float(game.spread_line), float(game.total_line)
+            # Books sometimes pull a line (e.g. pending injury news): record the
+            # position with no current line rather than a NaN.
+            ref = spread if pos["type"] == "spread" else total
+            if math.isnan(ref):
+                rows.append(row)
+                continue
             # auto-enter conditionals when the reference line meets the rule
             if pos["status"] == "waiting":
                 ok = eval(pos["condition"], {"__builtins__": {}}, {"spread_line": spread, "total_line": total})
