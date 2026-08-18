@@ -186,9 +186,9 @@
       "game_id": "2026_01_GB_MIN",
       "side": "MIN",
       "stake": 0.25,
-      "status": "watch",
+      "status": "declined",
       "condition": "manual",
-      "condition_note": "enter only if Kyler Murray looks functional in August preseason tape",
+      "condition_note": "watch RESOLVED 2026-08-18 as DECLINED \u2014 missed the number. Murray met the functional bar (started the preseason opener, won the job, points on his only series), but the market repriced first: GB -1.5 flipped to MIN -1.5, a 3-point move. The slip's bet was MIN +1.5; that price no longer exists, and buying the favorite side would be a different bet. Lesson: the tape-gate traded entry risk for price risk and lost the number \u2014 waiting for confirmation cost 3 points of CLV.",
       "arm": "slip"
     },
     {
