@@ -278,5 +278,25 @@
     },
     "f2-maye-mvp": 850,
     "f2-jsn-opoy": 1800
+  },
+  "2026-09-04": {
+    "fut-cin-north": 185,
+    "fut-ne-east": 125,
+    "fut-buf-sb": 1000,
+    "fut-ne-afc": 850,
+    "fut-chi-north": 305,
+    "fut-den-west": 225,
+    "fut-chi-sb": 2700,
+    "fut-min-sb": 3500,
+    "f2-mia-u45": {
+      "odds": -130,
+      "line": 4.5
+    },
+    "f2-lar-o115": {
+      "odds": -140,
+      "line": 11.5
+    },
+    "f2-maye-mvp": 1000,
+    "f2-jsn-opoy": 1800
   }
 }
