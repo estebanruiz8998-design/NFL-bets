@@ -1,0 +1,211 @@
+<title>Week 1 Bet Slip</title>
+<style>
+  :root {
+    --bg: #F5F6F2; --surface: #FFFFFF; --surface2: #EDEFE9;
+    --ink: #171B18; --ink2: #4A524C; --ink3: #7A837C; --line: #DDE1DA;
+    --accent: #1F7A4D; --accent-soft: #E2F0E8;
+    --amber: #9A6A1F; --amber-soft: #F4EAD6;
+    --gray: #7A837C; --gray-soft: #ECEEE9;
+    --neg: #C4554D; --neg-soft: #F6E4E2;
+    --pos: #4077B8; --pos-soft: #E3ECF7;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #101613; --surface: #17201B; --surface2: #1D2721;
+      --ink: #E8ECE7; --ink2: #A9B3AB; --ink3: #78827A; --line: #28332C;
+      --accent: #3FAE76; --accent-soft: #1B3226; --amber: #D2A24C; --amber-soft: #33290F;
+      --gray: #8A948C; --gray-soft: #222B25; --neg: #D06A5F; --neg-soft: #38201D;
+      --pos: #5089C6; --pos-soft: #1C2A3C; }
+  }
+  :root[data-theme="dark"] { --bg: #101613; --surface: #17201B; --surface2: #1D2721;
+    --ink: #E8ECE7; --ink2: #A9B3AB; --ink3: #78827A; --line: #28332C;
+    --accent: #3FAE76; --accent-soft: #1B3226; --amber: #D2A24C; --amber-soft: #33290F;
+    --gray: #8A948C; --gray-soft: #222B25; --neg: #D06A5F; --neg-soft: #38201D;
+    --pos: #5089C6; --pos-soft: #1C2A3C; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px 56px; }
+  header.top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .top-inner { max-width: 640px; margin: 0 auto; padding: 14px 16px 12px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+  .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 19px; }
+  .brand .tag { color: var(--amber); }
+  .countdown { font-family: var(--mono); font-size: 12.5px; color: var(--ink2); margin-left: auto; }
+  .countdown b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .banner { background: var(--amber-soft); color: var(--amber); border-radius: 10px; padding: 10px 14px; font-weight: 650; font-size: 13.5px; margin: 18px 0 0; }
+  .eyebrow { font: 600 11px var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin: 22px 0 6px; }
+  h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 6px; text-wrap: balance; }
+  .sub { color: var(--ink2); margin: 0 0 14px; max-width: 64ch; }
+  .headline { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); border-radius: 10px; padding: 12px 16px; margin: 0 0 8px; font-weight: 600; }
+  .honesty { color: var(--ink2); font-size: 13.5px; margin: 0 0 4px; max-width: 64ch; }
+
+  /* the ticket */
+  .ticket { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin: 14px 0 0; overflow: hidden; }
+  .ticket-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; padding: 12px 18px; background: var(--surface2); border-bottom: 1px solid var(--line); }
+  .ticket-head .t { font: 700 12px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; }
+  .ticket-head .d { font-family: var(--mono); font-size: 12px; color: var(--ink3); margin-left: auto; font-variant-numeric: tabular-nums; }
+  .play { padding: 16px 18px 14px; position: relative; }
+  .play + .play { border-top: 1px dashed var(--line); }
+  .play + .play::before, .play + .play::after { content: ""; position: absolute; top: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); }
+  .play + .play::before { left: -9px; } .play + .play::after { right: -9px; }
+  .play-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .rank { font: 700 11px var(--mono); color: var(--ink3); min-width: 22px; }
+  .game { font-weight: 650; }
+  .game small { font-weight: 500; color: var(--ink3); font-family: var(--mono); font-size: 12px; margin-left: 6px; }
+  .chips { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { font: 700 10px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .chip.BEST { background: var(--accent-soft); color: var(--accent); }
+  .chip.PLAY { background: var(--pos-soft); color: var(--pos); }
+  .chip.SMALL { background: var(--gray-soft); color: var(--gray); }
+  .chip.grade { background: var(--surface2); color: var(--ink2); }
+  .chip.grade.A { background: var(--accent-soft); color: var(--accent); }
+  .chip.grade.D { background: var(--neg-soft); color: var(--neg); }
+  .chip.started { background: var(--amber-soft); color: var(--amber); }
+  .line { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: end; margin: 8px 0 6px; }
+  .bet { font: 800 26px/1.1 var(--mono); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .bet .mkt { font: 600 11px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); display: block; margin-bottom: 4px; }
+  .stake { text-align: right; }
+  .stake .u { font: 700 20px/1.1 var(--mono); font-variant-numeric: tabular-nums; }
+  .stake .k { font: 600 10px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); }
+  .cond { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 13px; margin: 6px 0 10px; padding: 8px 12px; background: var(--amber-soft); color: var(--amber); border-radius: 8px; }
+  .cond .k { font: 700 10px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; align-self: baseline; }
+  .cond .v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600; }
+  .why { margin: 0 0 6px; color: var(--ink); font-size: 14px; }
+  .risk { margin: 0; color: var(--ink2); font-size: 13px; }
+  .risk b, .why b { color: var(--ink3); font: 700 10px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; margin-right: 6px; }
+  .meta { margin-top: 8px; font: 500 11.5px var(--mono); color: var(--ink3); }
+  .meta .v { color: var(--pos); }
+
+  .stub { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; padding: 12px 18px; border-top: 1px dashed var(--line); background: var(--surface2); font-family: var(--mono); font-size: 12px; color: var(--ink2); }
+  .stub b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stub .serial { margin-left: auto; color: var(--ink3); }
+
+  .avoid { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin-top: 12px; }
+  .avoid div { display: grid; grid-template-columns: minmax(120px, 34%) 1fr; gap: 12px; padding: 9px 14px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .avoid div:last-child { border-bottom: 0; }
+  .avoid .b { font-family: var(--mono); font-weight: 700; color: var(--neg); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+  .avoid .w { color: var(--ink2); }
+  ol.rules { margin: 8px 0 0; padding-left: 20px; color: var(--ink2); font-size: 14px; }
+  ol.rules li { margin: 4px 0; }
+  .foot { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 14px; color: var(--ink3); font-size: 12.5px; max-width: 64ch; }
+  .foot b { color: var(--ink2); }
+  a { color: var(--pos); }
+  @media (max-width: 480px) { .bet { font-size: 22px; } .chips { margin-left: 0; } }
+  @media (prefers-reduced-motion: no-preference) { .play { transition: background 0.2s; } }
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">NFL BETS <span class="tag">/ WEEK 1 SLIP</span></div>
+    <div class="countdown" id="countdown"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="banner" id="banner"></div>
+
+  <p class="eyebrow" id="eyebrow"></p>
+  <h2 id="title"></h2>
+  <p class="sub" id="sub"></p>
+  <div class="headline" id="headline"></div>
+  <p class="honesty" id="honesty"></p>
+
+  <div id="tomorrow"></div>
+  <div id="week1"></div>
+
+  <p class="eyebrow">Do not bet</p>
+  <div class="avoid" id="avoid"></div>
+
+  <p class="eyebrow">Timing rules</p>
+  <ol class="rules" id="rules"></ol>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+const SLIP = /*__SLIP__*/null;
+
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function fmtU(u) { return (Math.round(u * 100) / 100).toFixed(2).replace(/\.?0+$/, "") + "u"; }
+function kickoffState(iso, now) {
+  if (!iso) return { label: "", started: false };
+  const t = new Date(iso).getTime(); const d = t - now;
+  if (d <= 0) return { label: "started", started: true };
+  const h = Math.floor(d / 36e5), m = Math.floor((d % 36e5) / 6e4);
+  return { label: h >= 24 ? `${Math.floor(h / 24)}d ${h % 24}h` : `${h}h ${m}m`, started: false };
+}
+function fmtKick(iso, fallback) {
+  if (!iso) return esc(fallback || "");
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/New_York" }) + " ET";
+  } catch (e) { return esc(fallback || ""); }
+}
+
+function renderPlay(p, now) {
+  const ks = kickoffState(p.kickoff_iso, now);
+  return `<div class="play">
+    <div class="play-top">
+      <span class="rank">${p.rank ? "#" + p.rank : ""}</span>
+      <span class="game">${esc(p.game)}<small>${fmtKick(p.kickoff_iso, p.kickoff || p.date)}</small></span>
+      <span class="chips">
+        ${ks.started ? '<span class="chip started">started</span>' : ""}
+        <span class="chip ${esc(p.tier)}">${esc(p.tier)}</span>
+        <span class="chip grade ${esc(p.evidence_grade)}">evidence ${esc(p.evidence_grade)}</span>
+      </span>
+    </div>
+    <div class="line">
+      <div class="bet"><span class="mkt">${esc(p.market)}</span>${esc(p.bet)}</div>
+      <div class="stake"><div class="u">${fmtU(p.stake_units)}</div><div class="k">stake</div></div>
+    </div>
+    <div class="cond">
+      <span class="k">Now</span><span class="v">${esc(p.price_now)}</span>
+      <span class="k">Only if</span><span class="v">${esc(p.price_condition)}</span>
+    </div>
+    <p class="why"><b>Why</b>${esc(p.why)}</p>
+    <p class="risk"><b>Risk</b>${esc(p.risk)}</p>
+    <div class="meta">verification: <span class="v">${esc(p.verification)}</span></div>
+  </div>`;
+}
+
+function renderTicket(title, dateLabel, plays, now) {
+  if (!plays.length) return "";
+  const units = plays.reduce((s, p) => s + (p.stake_units || 0), 0);
+  return `<div class="ticket">
+    <div class="ticket-head"><span class="t">${esc(title)}</span><span class="d">${esc(dateLabel)}</span></div>
+    ${plays.map(p => renderPlay(p, now)).join("")}
+    <div class="stub"><span>plays <b>${plays.length}</b></span><span>stake <b>${fmtU(units)}</b></span><span class="serial">${esc(SLIP.serial || "")}</span></div>
+  </div>`;
+}
+
+function render() {
+  const now = Date.now();
+  document.getElementById("banner").textContent = SLIP.banner;
+  document.getElementById("eyebrow").textContent = SLIP.eyebrow;
+  document.getElementById("title").textContent = SLIP.title;
+  document.getElementById("sub").textContent = SLIP.sub;
+  document.getElementById("headline").textContent = SLIP.headline;
+  document.getElementById("honesty").textContent = SLIP.honesty_note;
+  document.getElementById("tomorrow").innerHTML = renderTicket("Tomorrow — season opener", SLIP.tomorrow_label, SLIP.tomorrow, now);
+  document.getElementById("week1").innerHTML = renderTicket("Rest of Week 1", SLIP.week1_label, SLIP.week1, now);
+  document.getElementById("avoid").innerHTML = SLIP.do_not_bet.map(a => `<div><span class="b">${esc(a.bet)}</span><span class="w">${esc(a.why)}</span></div>`).join("");
+  document.getElementById("rules").innerHTML = SLIP.timing_rules.map(r => `<li>${esc(r)}</li>`).join("");
+  const total = [...SLIP.tomorrow, ...SLIP.week1].reduce((s, p) => s + (p.stake_units || 0), 0);
+  document.getElementById("foot").innerHTML = `<b>Total exposure ${fmtU(total)}</b> (1u = 1% of bankroll). ${esc(SLIP.foot)}
+    <br><br>If it stops being fun: <b>1-800-GAMBLER</b>.`;
+}
+
+function tick() {
+  const el = document.getElementById("countdown");
+  const now = Date.now();
+  const next = [...SLIP.tomorrow, ...SLIP.week1].map(p => p.kickoff_iso).filter(Boolean)
+    .map(iso => new Date(iso).getTime()).filter(t => t > now).sort((a, b) => a - b)[0];
+  if (!next) { el.innerHTML = "Week 1 <b>underway</b>"; return; }
+  const ks = kickoffState(new Date(next).toISOString(), now);
+  const first = new Date(SLIP.tomorrow[0]?.kickoff_iso || next).getTime();
+  el.innerHTML = (next === first ? "Kickoff in " : "Next kickoff in ") + `<b>${ks.label}</b>`;
+}
+
+render(); tick(); setInterval(tick, 30000);
+</script>
