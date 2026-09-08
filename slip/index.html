@@ -1,0 +1,211 @@
+<title>Week 1 Bet Slip</title>
+<style>
+  :root {
+    --bg: #F5F6F2; --surface: #FFFFFF; --surface2: #EDEFE9;
+    --ink: #171B18; --ink2: #4A524C; --ink3: #7A837C; --line: #DDE1DA;
+    --accent: #1F7A4D; --accent-soft: #E2F0E8;
+    --amber: #9A6A1F; --amber-soft: #F4EAD6;
+    --gray: #7A837C; --gray-soft: #ECEEE9;
+    --neg: #C4554D; --neg-soft: #F6E4E2;
+    --pos: #4077B8; --pos-soft: #E3ECF7;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #101613; --surface: #17201B; --surface2: #1D2721;
+      --ink: #E8ECE7; --ink2: #A9B3AB; --ink3: #78827A; --line: #28332C;
+      --accent: #3FAE76; --accent-soft: #1B3226; --amber: #D2A24C; --amber-soft: #33290F;
+      --gray: #8A948C; --gray-soft: #222B25; --neg: #D06A5F; --neg-soft: #38201D;
+      --pos: #5089C6; --pos-soft: #1C2A3C; }
+  }
+  :root[data-theme="dark"] { --bg: #101613; --surface: #17201B; --surface2: #1D2721;
+    --ink: #E8ECE7; --ink2: #A9B3AB; --ink3: #78827A; --line: #28332C;
+    --accent: #3FAE76; --accent-soft: #1B3226; --amber: #D2A24C; --amber-soft: #33290F;
+    --gray: #8A948C; --gray-soft: #222B25; --neg: #D06A5F; --neg-soft: #38201D;
+    --pos: #5089C6; --pos-soft: #1C2A3C; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px 56px; }
+  header.top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .top-inner { max-width: 640px; margin: 0 auto; padding: 14px 16px 12px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+  .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 19px; }
+  .brand .tag { color: var(--amber); }
+  .countdown { font-family: var(--mono); font-size: 12.5px; color: var(--ink2); margin-left: auto; }
+  .countdown b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .banner { background: var(--amber-soft); color: var(--amber); border-radius: 10px; padding: 10px 14px; font-weight: 650; font-size: 13.5px; margin: 18px 0 0; }
+  .eyebrow { font: 600 11px var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink3); margin: 22px 0 6px; }
+  h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 6px; text-wrap: balance; }
+  .sub { color: var(--ink2); margin: 0 0 14px; max-width: 64ch; }
+  .headline { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); border-radius: 10px; padding: 12px 16px; margin: 0 0 8px; font-weight: 600; }
+  .honesty { color: var(--ink2); font-size: 13.5px; margin: 0 0 4px; max-width: 64ch; }
+
+  /* the ticket */
+  .ticket { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; margin: 14px 0 0; overflow: hidden; }
+  .ticket-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; padding: 12px 18px; background: var(--surface2); border-bottom: 1px solid var(--line); }
+  .ticket-head .t { font: 700 12px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; }
+  .ticket-head .d { font-family: var(--mono); font-size: 12px; color: var(--ink3); margin-left: auto; font-variant-numeric: tabular-nums; }
+  .play { padding: 16px 18px 14px; position: relative; }
+  .play + .play { border-top: 1px dashed var(--line); }
+  .play + .play::before, .play + .play::after { content: ""; position: absolute; top: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); }
+  .play + .play::before { left: -9px; } .play + .play::after { right: -9px; }
+  .play-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .rank { font: 700 11px var(--mono); color: var(--ink3); min-width: 22px; }
+  .game { font-weight: 650; }
+  .game small { font-weight: 500; color: var(--ink3); font-family: var(--mono); font-size: 12px; margin-left: 6px; }
+  .chips { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { font: 700 10px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .chip.BEST { background: var(--accent-soft); color: var(--accent); }
+  .chip.PLAY { background: var(--pos-soft); color: var(--pos); }
+  .chip.SMALL { background: var(--gray-soft); color: var(--gray); }
+  .chip.grade { background: var(--surface2); color: var(--ink2); }
+  .chip.grade.A { background: var(--accent-soft); color: var(--accent); }
+  .chip.grade.D { background: var(--neg-soft); color: var(--neg); }
+  .chip.started { background: var(--amber-soft); color: var(--amber); }
+  .line { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: end; margin: 8px 0 6px; }
+  .bet { font: 800 26px/1.1 var(--mono); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .bet .mkt { font: 600 11px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); display: block; margin-bottom: 4px; }
+  .stake { text-align: right; }
+  .stake .u { font: 700 20px/1.1 var(--mono); font-variant-numeric: tabular-nums; }
+  .stake .k { font: 600 10px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink3); }
+  .cond { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 13px; margin: 6px 0 10px; padding: 8px 12px; background: var(--amber-soft); color: var(--amber); border-radius: 8px; }
+  .cond .k { font: 700 10px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; align-self: baseline; }
+  .cond .v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 600; }
+  .why { margin: 0 0 6px; color: var(--ink); font-size: 14px; }
+  .risk { margin: 0; color: var(--ink2); font-size: 13px; }
+  .risk b, .why b { color: var(--ink3); font: 700 10px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; margin-right: 6px; }
+  .meta { margin-top: 8px; font: 500 11.5px var(--mono); color: var(--ink3); }
+  .meta .v { color: var(--pos); }
+
+  .stub { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; padding: 12px 18px; border-top: 1px dashed var(--line); background: var(--surface2); font-family: var(--mono); font-size: 12px; color: var(--ink2); }
+  .stub b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stub .serial { margin-left: auto; color: var(--ink3); }
+
+  .avoid { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin-top: 12px; }
+  .avoid div { display: grid; grid-template-columns: minmax(120px, 34%) 1fr; gap: 12px; padding: 9px 14px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .avoid div:last-child { border-bottom: 0; }
+  .avoid .b { font-family: var(--mono); font-weight: 700; color: var(--neg); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+  .avoid .w { color: var(--ink2); }
+  ol.rules { margin: 8px 0 0; padding-left: 20px; color: var(--ink2); font-size: 14px; }
+  ol.rules li { margin: 4px 0; }
+  .foot { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 14px; color: var(--ink3); font-size: 12.5px; max-width: 64ch; }
+  .foot b { color: var(--ink2); }
+  a { color: var(--pos); }
+  @media (max-width: 480px) { .bet { font-size: 22px; } .chips { margin-left: 0; } }
+  @media (prefers-reduced-motion: no-preference) { .play { transition: background 0.2s; } }
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">NFL BETS <span class="tag">/ WEEK 1 SLIP</span></div>
+    <div class="countdown" id="countdown"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="banner" id="banner"></div>
+
+  <p class="eyebrow" id="eyebrow"></p>
+  <h2 id="title"></h2>
+  <p class="sub" id="sub"></p>
+  <div class="headline" id="headline"></div>
+  <p class="honesty" id="honesty"></p>
+
+  <div id="tomorrow"></div>
+  <div id="week1"></div>
+
+  <p class="eyebrow">Do not bet</p>
+  <div class="avoid" id="avoid"></div>
+
+  <p class="eyebrow">Timing rules</p>
+  <ol class="rules" id="rules"></ol>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+const SLIP = {"headline": "The single best bet of the week is a small one: NE @ SEA Under 44.5 at -112 or better (Under 45.5 first if any book still hangs it), 0.25u \u2014 it and BUF @ HOU Under 44.5 (an unreviewed derivative of the same band argument) are the least-bad tickets on the board, two unmoved 44.5 totals in the one Week 1 band with a (post-hoc) under lean, and even that is a pattern rather than proven edge.", "honesty_note": "Every candidate on the board failed 3-lens adversarial review as an edge claim (zero survivors): the professional backtest shows no component with edge against closing lines, the model's out-of-sample calibration slope is ~0, and every Week 1 pattern here (unders 54.1%, big-fav fades, champ-opener records) is non-significant after multiple-comparison correction. What the evidence does support is price discipline: the tickets below are the better side of a key number or a total in the one W1 band with a (post-hoc) under lean, sized at 0.25u each so a 0-5 week costs about 1.25% of bankroll; note that BUF @ HOU Under 44.5 was NOT individually reviewed by any lens \u2014 it is a derivative of the opener's band argument and is graded D for that reason. Treat this slip as a CLV-tracking exercise with real money at minimum stakes, not as a book with expected profit.", "tomorrow": [{"rank": 1, "game": "NE @ SEA (Lumen Field)", "date": "Wed 9/9", "kickoff": "8:20pm ET", "bet": "Under 44.5", "market": "Total", "price_now": "44.5: O -108 / U -112 at the reference feed (nflverse 9/08); DraftKings opened Under 44.5 at -115; one book reported still at 45.5", "price_condition": "Under 45.5 at -110 or better wherever it exists; otherwise Under 44.5 at -112 or better (the reference-feed -112 qualifies; DraftKings' -115 does NOT). No bet at Under 44.5 -115 or worse, no bet at 44 or lower. If the only prices on the street are -115 on 44.5, the headline bet is a no-bet.", "stake_units": 0.25, "tier": "SMALL", "why": "Week 1 games with a total between 43.5 and 45.5 have gone under 58-31-1 since 2002 (65%, similar in both eras, 70% since 2020), and Week 1 unders overall run 54%. This total has sat at 44.5 for eight weeks while the rest of the Week 1 board drifted toward overs, so you are not chasing a move; it is a short-week game with the champion's defense that sacked Maye six times in the Super Bowl, a Patriots offense missing its lead back (Henderson doubtful) and a reserve center (Ben Brown out), and a quarterback with zero preseason snaps.", "risk": "The 43.5-45.5 band is a post-hoc slice (neighbouring bands are coin flips and the same band is 50.7% in weeks 2-18), Seattle's 2025 home games went over the total by 8 points on average, and Seattle is thin at safety (Ty Okada, hamstring, did not practice Sunday or Monday; Nick Emmanwori, ankle, limited) \u2014 the game-day inactives at about 6:50pm ET settle it \u2014 which favors the Patriots' passing game.", "evidence_grade": "C", "verification": "0/3 as an edge; 1 of 3 lenses named it the least-bad ticket on the game, and both other lenses called Under 45.5 the strictly better number", "kickoff_iso": "2026-09-09T20:20:00-04:00"}, {"rank": 2, "game": "NE @ SEA (Lumen Field)", "date": "Wed 9/9", "kickoff": "8:20pm ET", "bet": "NE +3.5", "market": "Spread", "price_now": "Split market: SEA -3 (-118/-120) / NE +3 (-102/+100) at the reference feed and some books; DraftKings SEA -3.5 (-105) / NE +3.5 (-115) as reported Sept 8", "price_condition": "NE +3.5 at -115 or better (fallback: NE +3 at +100 or better). Dead at +3.5 worse than -115, at +3 -110, at +2.5 any price, or if any major book posts SEA -3 at -110 flat.", "stake_units": 0.25, "tier": "SMALL", "why": "This is a price ticket, not a view on the game: the line sat at SEA -3.5 all summer and ticked to -3 at the reference feed this week despite NE's injury news, while DraftKings was reported at -3.5 (-105) / NE +3.5 (-115) on Sept 8 \u2014 so +3.5 at -115 should be available (confirm at the book) and keeps the key number 3 in your pocket (home 3-point favorites cover only 45-47% ex-push across all weeks). The model rates the number fair (SEA by 3.1), so you are buying the better side of 3 at roughly market price with a chance the close lands at -3 flat and pays you a half point.", "risk": "Super Bowl losers are 6-18 ATS in their next Week 1 since 2002 (0-3 as dogs) \u2014 verified in nflverse, though it is another small post-hoc pattern \u2014 Week 1 road dogs at +3/+3.5 are 12-18-2 since 2014, and if the close is SEA -3.5 (-110) this ticket is simply the market price minus vig \u2014 three lenses called it zero expected CLV.", "evidence_grade": "D", "verification": "0/3 as an edge (0/3 for the SEA side, 0/3 for the teaser version); 1 of 3 lenses named it the acceptable NE ticket, and two lenses accepted it only at the stated price", "kickoff_iso": "2026-09-09T20:20:00-04:00"}], "week1": [{"rank": 1, "game": "DEN @ KC (Arrowhead, MNF)", "date": "Mon 9/14", "kickoff": "8:15pm ET", "bet": "DEN +3", "market": "Spread", "price_now": "KC -3 (+100) / DEN +3 (-120) at the reference feed; DraftKings -3 (juice to be confirmed at bet time; DK also posts a 42.5 total there, not 43.5); FanDuel/BetMGM -2.5 (-115/-120)", "price_condition": "DEN +3 at -110 or better only (DraftKings or any book holding 3 at flat juice \u2014 confirm the juice at bet time). Never DEN +2.5 at any price, never +3 at -115 or worse. Do NOT also hold KC -3 or KC -2.5.", "stake_units": 0.25, "tier": "SMALL", "why": "The market's own moneyline (KC -148 / DEN +124) and prediction markets imply a fair spread near KC -2.5, not -3, so a book giving you the full 3 at -110 is selling the key number at a standard price while consensus sits at 2.5 \u2014 across all weeks since 2014, home favorites at exactly 3 have covered only 47% of decided games \u2014 42% of all games, with 11% pushes (the Week 1-only record at exactly -3 is 7-7-2), which makes the dog side roughly breakeven-plus at -110. Mahomes (nine months off ACL/LCL, reported fully recovered and on track to start, but with zero preseason snaps) is the only unresolved news and any downgrade moves the line toward you.", "risk": "The exact situational pattern (prior-year division champ as a Week 1 dog vs a non-playoff team) is 5-9-1 historically, the model has KC by 2.7 (no edge), and if Mahomes is cleared and looks sharp the +3 is worth about +0.7% at best \u2014 a coin flip on the right side of 3, nothing more.", "evidence_grade": "C", "verification": "0/3 for both KC tickets; DEN +3 (-110) was the corrected ticket named by 3 separate lenses as the marginally better side", "kickoff_iso": "2026-09-14T20:15:00-04:00"}, {"rank": 2, "game": "BUF @ HOU (NRG Stadium)", "date": "Sun 9/13", "kickoff": "1:00pm ET (roof stadium, no weather factor)", "bet": "Under 44.5", "market": "Total", "price_now": "44.5 (-110/-110 at the reference feed; unchanged since July; CLV 0 on the paper basket)", "price_condition": "Under 44.5 at -110 or better; take Under 45 or 45.5 if a book hangs it. No bet at 44 or lower or at -115.", "stake_units": 0.25, "tier": "SMALL", "why": "Same pattern as the opener ticket: Week 1 totals in the 43.5-45.5 band have gone under 58-31-1, and this is one of two Week 1 totals in that band (four total: NE@SEA, BUF@HOU, WAS@PHI, DEN@KC) that has not moved since July, so there is no summer move to chase. Buffalo is a road favorite by 1.5, which the market prices as a near pick'em between two playoff defenses, and both sides have to open a season indoors without the pace-of-play data books get after a few weeks.", "risk": "The band is a post-hoc slice of a non-significant Week 1 under lean (54%), the model's total (44.6) says the number is fair, and Buffalo's offense has been a top-five scoring unit for years.", "evidence_grade": "D", "verification": "Not individually reviewed by any lens; an unreviewed derivative of the Under 44.5 band evidence that 1 of 3 lenses accepted as least-bad for the opener and of the skeptic's 42-45.5 bucket (75-50), both flagged post-hoc \u2014 graded D accordingly", "kickoff_iso": "2026-09-13T13:00:00-04:00"}, {"rank": 3, "game": "CLE @ JAX (EverBank Stadium)", "date": "Sun 9/13", "kickoff": "1:00pm ET", "bet": "CLE +9", "market": "Spread", "price_now": "JAX -8.5 (-108/-112) consensus, ML -440/+340; at least one book reported at -9; a few laggards at -8", "price_condition": "Fill-if-found only: CLE +9 at -110 or better. Never CLE +8.5 at -112, never +8 at any price. If no book shows +9 on Sunday morning, no bet.", "stake_units": 0.25, "tier": "SMALL", "why": "No Week 1 favorite laying 7.5 or more has a supportive record (17-32 ATS all-time; home favorites at 7.5-9 are 2-8 since 2014), and Week 1 dogs of 8+ are 29-12, so the one thing the data clearly says on this game is do not lay Jacksonville. Taking +9 at the highest available number gives you both 7 and 8 and a full point over the consensus close if the line settles at 8.5.", "risk": "The line sat at -7.5 from July through Sept 4 and moved a full point to -8.5 this week on reported money-side flow toward Jacksonville, the model has JAX by 8.4 (fair), and within the 8+ dog record 10+ point dogs are 14-5 and 8-9.5 dogs 15-7, but the 7.5-9.5 band is neutral in expected margin.", "evidence_grade": "C", "verification": "1 of 3 lenses accepted CLE +8.5 (killed as an edge); CLE +9 (-110) was the corrected ticket named by 2 lenses; JAX -7.5 0/3", "kickoff_iso": "2026-09-13T13:00:00-04:00"}], "do_not_bet": [{"bet": "SEA -3.5 (the July slip's ticket), SEA -3 (-118/-120), SEA ML -170", "why": "Lays through or on the key number 3 for a side that covers 45-47% ex-push across all weeks; the only line movement this week has been toward New England; the champ-home-opener 9-3-1 is n=13 and not significant; model P(cover -3) 48%."}, {"bet": "NE +3 at -110, NE +2.5 at any price, NE ML +142", "why": "NE +3 at -110 is worse than market (+3 is +100 elsewhere); +2.5 loses the push protection on 3 that is the only structural argument for NE; ML needs 41.3% and road +3 dogs win outright 40%."}, {"bet": "Any 2-team 6-point teaser including NE +9 or +9.5 at -120 or worse", "why": "Teased W1 road dogs at 3-3.5 with total <=49 hit 62% since 2014 (18-11), below the 72-74% breakeven; -110 teasers from exactly +3 barely exist at mainstream books."}, {"bet": "JAX -8.5 / -9 / ML -440 (chasing the July JAX -7)", "why": "The slip's condition (-7 flat) was never met; -8.5 lays through 7 and 8 into a 40.5 total; W1 home favorites laying 7.5-9 are 2-8 since 2014."}, {"bet": "KC -3 at any price, KC -2.5 at -115 or worse", "why": "Across all weeks since 2014, home favorites at exactly 3 cover 47% of decided games (42% of all games, 11% pushes) (about -5% EV even at +100; W1-only at exactly -3 is 7-7-2); -2.5 is priced -115/-120 at the books that hang it; and it is the paired opposite of the DEN +3 ticket on this slip."}, {"bet": "DEN +2.5 at any price, DEN ML +124", "why": "+2.5 gives up the key number; +124 is 15-20 cents short of what a +3 dog is worth (~+140)."}, {"bet": "PHI -5.5 (the July slip's PHI target was -5 or shorter)", "why": "The July -4.5 entry is gone; the number moved a full point toward PHI while the total dropped 2 points, making a 5.5-point cover structurally harder; model says PHI by 5.5 (fair)."}, {"bet": "MIN -1.5 / MIN ML -125 / GB +1.5 (the slip's MIN +1.5 watch)", "why": "The line flipped to MIN -1.5 when Murray was named starter and Parsons went to PUP/IR; both are fully priced and the model has MIN by 1.5 (no gap)."}, {"bet": "SF +3.5 (-108) and LA -3.5 (-112) in Melbourne", "why": "Prior-year playoff road dogs at +2.5..+4 in W1 are 9-19-3 (dead since 2014); W1 road dogs at exactly +3.5 are 5-11 since 2014; neutral-site games are 33-33 ATS; the travel asymmetry has been public for a month with the line unmoved at -3.5. LA -3.5 lays through 3 on a side whose move ended in July."}, {"bet": "NYJ @ TEN Over 39.5 (the model's only LEAN, +0.009 EV)", "why": "A 0.4-point model/market gap is inside the ~6-point noise floor and the model's out-of-sample calibration slope is ~0; W1 overs are 45.9% since 2002 and only 38-58 (39.6%) since 2020, and reported sharp handle is on the Under. Do not scale the 0.1u paper ticket."}, {"bet": "The 15-game Week 1 unders basket", "why": "W1 unders 54.1% is p=0.12, mean total-minus-line is indistinguishable from zero, and the paper basket already shows -6.0 points of net negative CLV; fifteen units of vig against an anecdote."}, {"bet": "Under 44.5 WAS@PHI (-115) and Under 47.5 BAL@IND", "why": "These are the two largest under moves on the board (each down 2 points); the July numbers that carried +2 CLV are gone and you would be chasing at a worse number and juice."}, {"bet": "TB @ CIN Under 50.5 or Over 50.5", "why": "Totals of 50+ in Week 1 are 13-17 for the under (the one bucket where the W1 under lean reverses); model total 50.4 is fair; no ticket either way."}, {"bet": "ARI +10 (-115) / LAC -10", "why": "The model's July gap (4.6 pts) has closed to 0.2; ARI +10 is juiced and Arizona starts Jacoby Brissett with rookie RB Jeremiyah Love in a tandem (confirmed Sept 8); LAC -10 lays through 7 and 10."}, {"bet": "Road-favorite fades or moneylines: BAL -3.5, BUF -1.5, CHI -3, DAL -3 and NYG ML +136, IND ML +145, CAR ML +130, HOU ML -105", "why": "W1 road favorites at -1.5..-3.5 are 40-36 ATS (p=1.00 vs breakeven); the dog moneylines are all priced 10-20 cents below their spread equivalents, so if you back any of these dogs, the spread is the better ticket."}, {"bet": "NO +7 / DET -7", "why": "W1 home favorites at 6.5-7.5: dog 22-19 (p=0.88 vs breakeven); the qualifier the slip implied (playoff home vs non-playoff road) does not appear to apply \u2014 Detroit went 9-8 in 2025 and missed the playoffs (nflverse). Nothing either way; CLV on the July NO +7 is 0."}, {"bet": "Any first-half, alt-spread or derivative on NE@SEA, and any stake above 0.25u on any ticket this week", "why": "Derivatives of a number every tool calls fair, sold at higher hold; and no component has demonstrated edge vs closing lines, so minimum stakes are the only defensible sizing."}], "total_units": 1.25, "timing_rules": ["Opener (Wed 9/9): shop the total first thing Wednesday morning \u2014 if any book still hangs 45.5, take Under 45.5 (-110) there and skip 44.5 entirely. Otherwise bet Under 44.5 only at -112 or better (the reference feed's -112 qualifies; DraftKings' -115 does not); if the number is 44 or lower, or 44.5 is -115 or worse everywhere, the bet is off. The final practice report is already out (Henderson OUT and Brown OUT are already assumed on the NE side; Seattle's safety status is Okada DNP / Emmanwori limited); re-check the game-day inactives (~6:50pm ET Wednesday) \u2014 the ticket survives either way, but do not add to it.", "Opener spread: NE +3.5 is a bet only at -115 or better (DraftKings today); NE +3 only at +100 or better. If every major book converges on SEA -3.5 (-110), or any book shows SEA -3 at -110 flat, the price play is dead \u2014 do not chase NE +3 at -110 and never take +2.5. Never hold any SEA ticket alongside it.", "DEN +3: bet it as soon as you find +3 at -110 (DraftKings shows -3 today; confirm its juice at bet time), not later \u2014 if Mahomes is downgraded the line moves toward Denver and +3 disappears, and if he is cleared the number goes to -3 -110/-3.5 anyway. Never +2.5, never +3 at -115 or worse, and do not pair it with any KC ticket.", "Sunday totals and dogs: place BUF@HOU Under 44.5 (1:00pm ET kickoff) by Saturday at -110 or better (no bet at 44 or lower or at -115). CLE +9 is fill-if-found only on Sunday morning at -110 or better; if the best number on the street is +8.5 you have no bet on that game. If Josh Hines-Allen is ruled out for JAX, expect the line to drop and the +9 to vanish \u2014 that is fine, pass.", "Book-level rule: 1u = 1% of bankroll, no ticket above 0.25u, total exposure this week 1.25u. Log every fill against the closing line; if the Week 1 closing-line-value ledger is net negative, do not scale any of these angles in Week 2 \u2014 nothing here has demonstrated edge, and the only thing worth learning from this week is whether the price rules beat the close."], "banner": "Real-money slip at minimum stakes. Nothing on it has a proven edge against closing lines \u2014 every ticket is a price rule, sized 0.25u so a 0-5 week costs about 1.25% of bankroll. 1-800-GAMBLER if it stops being fun.", "eyebrow": "Built Sept 8, 2026 \u00b7 season opener Wed Sept 9, 8:20pm ET \u00b7 46-agent analysis, 3-lens adversarial verification per ticket", "title": "What to bet on tomorrow, and the rest of Week 1", "sub": "Two tickets on the opener, three across the week, and a do-not-bet list for every number the July slip once liked. Every play names the exact price at which it stops being a bet \u2014 if your book doesn't show that number, you have no bet.", "tomorrow_label": "Wed Sept 9 \u00b7 NE @ SEA \u00b7 Lumen Field", "week1_label": "Thu Sept 10 \u2013 Mon Sept 14", "foot": "Source of truth: this slip was synthesized from the tuned model card, eight weeks of closing-line-value paper trading, the pre-registered Week 1 pattern studies, and same-day injury and price checks; every statistic on it was re-derived from the nflverse game file before publishing. The July slip (JAX \u22127, DEN +2.5, SEA \u22123.5, SF +3.5, PHI \u22125) is retired \u2014 see the do-not-bet list for why each number is gone.", "serial": "2026-09-08 \u00b7 f131170"};
+
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function fmtU(u) { return (Math.round(u * 100) / 100).toFixed(2).replace(/\.?0+$/, "") + "u"; }
+function kickoffState(iso, now) {
+  if (!iso) return { label: "", started: false };
+  const t = new Date(iso).getTime(); const d = t - now;
+  if (d <= 0) return { label: "started", started: true };
+  const h = Math.floor(d / 36e5), m = Math.floor((d % 36e5) / 6e4);
+  return { label: h >= 24 ? `${Math.floor(h / 24)}d ${h % 24}h` : `${h}h ${m}m`, started: false };
+}
+function fmtKick(iso, fallback) {
+  if (!iso) return esc(fallback || "");
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/New_York" }) + " ET";
+  } catch (e) { return esc(fallback || ""); }
+}
+
+function renderPlay(p, now) {
+  const ks = kickoffState(p.kickoff_iso, now);
+  return `<div class="play">
+    <div class="play-top">
+      <span class="rank">${p.rank ? "#" + p.rank : ""}</span>
+      <span class="game">${esc(p.game)}<small>${fmtKick(p.kickoff_iso, p.kickoff || p.date)}</small></span>
+      <span class="chips">
+        ${ks.started ? '<span class="chip started">started</span>' : ""}
+        <span class="chip ${esc(p.tier)}">${esc(p.tier)}</span>
+        <span class="chip grade ${esc(p.evidence_grade)}">evidence ${esc(p.evidence_grade)}</span>
+      </span>
+    </div>
+    <div class="line">
+      <div class="bet"><span class="mkt">${esc(p.market)}</span>${esc(p.bet)}</div>
+      <div class="stake"><div class="u">${fmtU(p.stake_units)}</div><div class="k">stake</div></div>
+    </div>
+    <div class="cond">
+      <span class="k">Now</span><span class="v">${esc(p.price_now)}</span>
+      <span class="k">Only if</span><span class="v">${esc(p.price_condition)}</span>
+    </div>
+    <p class="why"><b>Why</b>${esc(p.why)}</p>
+    <p class="risk"><b>Risk</b>${esc(p.risk)}</p>
+    <div class="meta">verification: <span class="v">${esc(p.verification)}</span></div>
+  </div>`;
+}
+
+function renderTicket(title, dateLabel, plays, now) {
+  if (!plays.length) return "";
+  const units = plays.reduce((s, p) => s + (p.stake_units || 0), 0);
+  return `<div class="ticket">
+    <div class="ticket-head"><span class="t">${esc(title)}</span><span class="d">${esc(dateLabel)}</span></div>
+    ${plays.map(p => renderPlay(p, now)).join("")}
+    <div class="stub"><span>plays <b>${plays.length}</b></span><span>stake <b>${fmtU(units)}</b></span><span class="serial">${esc(SLIP.serial || "")}</span></div>
+  </div>`;
+}
+
+function render() {
+  const now = Date.now();
+  document.getElementById("banner").textContent = SLIP.banner;
+  document.getElementById("eyebrow").textContent = SLIP.eyebrow;
+  document.getElementById("title").textContent = SLIP.title;
+  document.getElementById("sub").textContent = SLIP.sub;
+  document.getElementById("headline").textContent = SLIP.headline;
+  document.getElementById("honesty").textContent = SLIP.honesty_note;
+  document.getElementById("tomorrow").innerHTML = renderTicket("Tomorrow — season opener", SLIP.tomorrow_label, SLIP.tomorrow, now);
+  document.getElementById("week1").innerHTML = renderTicket("Rest of Week 1", SLIP.week1_label, SLIP.week1, now);
+  document.getElementById("avoid").innerHTML = SLIP.do_not_bet.map(a => `<div><span class="b">${esc(a.bet)}</span><span class="w">${esc(a.why)}</span></div>`).join("");
+  document.getElementById("rules").innerHTML = SLIP.timing_rules.map(r => `<li>${esc(r)}</li>`).join("");
+  const total = [...SLIP.tomorrow, ...SLIP.week1].reduce((s, p) => s + (p.stake_units || 0), 0);
+  document.getElementById("foot").innerHTML = `<b>Total exposure ${fmtU(total)}</b> (1u = 1% of bankroll). ${esc(SLIP.foot)}
+    <br><br>If it stops being fun: <b>1-800-GAMBLER</b>.`;
+}
+
+function tick() {
+  const el = document.getElementById("countdown");
+  const now = Date.now();
+  const next = [...SLIP.tomorrow, ...SLIP.week1].map(p => p.kickoff_iso).filter(Boolean)
+    .map(iso => new Date(iso).getTime()).filter(t => t > now).sort((a, b) => a - b)[0];
+  if (!next) { el.innerHTML = "Week 1 <b>underway</b>"; return; }
+  const ks = kickoffState(new Date(next).toISOString(), now);
+  const first = new Date(SLIP.tomorrow[0]?.kickoff_iso || next).getTime();
+  el.innerHTML = (next === first ? "Kickoff in " : "Next kickoff in ") + `<b>${ks.label}</b>`;
+}
+
+render(); tick(); setInterval(tick, 30000);
+</script>

@@ -64,7 +64,42 @@ def main() -> None:
     slip["serial"] = git_serial()
     html = (HERE / "template.html").read_text().replace("/*__SLIP__*/null", json.dumps(slip))
     (HERE / "index.html").write_text(html)
+    (HERE.parent / "week1-2026-final-slip.md").write_text(markdown(slip))
     print(f"built {HERE / 'index.html'} ({len(slip['tomorrow'])} opener + {len(slip['week1'])} week-1 plays)")
+
+
+def _play(p: dict) -> str:
+    return (
+        f"### #{p['rank']} {p['game']} — {p['date']} {p.get('kickoff', '')}\n\n"
+        f"**{p['bet']}** ({p['market']}) · {p['stake_units']}u · {p['tier']} · evidence {p['evidence_grade']}\n\n"
+        f"- **Now:** {p['price_now']}\n"
+        f"- **Only if:** {p['price_condition']}\n"
+        f"- **Why:** {p['why']}\n"
+        f"- **Risk:** {p['risk']}\n"
+        f"- **Verification:** {p['verification']}\n"
+    )
+
+
+def markdown(slip: dict) -> str:
+    total = sum(p["stake_units"] for p in slip["tomorrow"] + slip["week1"])
+    parts = [
+        "# Week 1 2026 — Final Bet Slip\n",
+        f"*{slip['eyebrow']}*\n",
+        f"> {slip['banner']}\n",
+        f"**{slip['headline']}**\n",
+        f"{slip['honesty_note']}\n",
+        f"## Tomorrow — {slip['tomorrow_label']}\n",
+        *[_play(p) for p in slip["tomorrow"]],
+        f"## Rest of Week 1 — {slip['week1_label']}\n",
+        *[_play(p) for p in slip["week1"]],
+        "## Do not bet\n",
+        "| Ticket | Why |\n|---|---|\n" + "\n".join(f"| ~~{a['bet']}~~ | {a['why']} |" for a in slip["do_not_bet"]) + "\n",
+        "## Timing rules\n",
+        "\n".join(f"{i}. {r}" for i, r in enumerate(slip["timing_rules"], 1)) + "\n",
+        f"**Total exposure {total:g}u** (1u = 1% of bankroll). {slip['foot']}\n",
+        f"*Serial: {slip['serial']}. Source: `slip/week1.json`; page: `slip/index.html`.* If it stops being fun: 1-800-GAMBLER.\n",
+    ]
+    return "\n".join(parts)
 
 
 if __name__ == "__main__":
