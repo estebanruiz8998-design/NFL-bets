@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "graded_on": "2026-09-11",
+    "week1_games_final": 2,
+    "week1_games": 16,
+    "pending_positions": [
+      "w1-den-kc",
+      "lean-ten-over",
+      "lean-mia-kc",
+      "w1-jax-cle",
+      "w1-phi-was",
+      "w1-min-gb",
+      "b-no-det",
+      "b-kc-den",
+      "u-chi_car",
+      "u-tb_cin",
+      "u-no_det",
+      "u-buf_hou",
+      "u-bal_ind",
+      "u-cle_jax",
+      "u-atl_pit",
+      "u-ari_lac",
+      "u-mia_lv",
+      "u-gb_min",
+      "u-was_phi",
+      "u-dal_nyg",
+      "u-den_kc",
+      "m-jax-phi",
+      "m-den-la",
+      "m-ari-lac",
+      "s-buf_hou-u445",
+      "s-cle-plus9",
+      "s-den-plus3"
+    ],
+    "final": false
+  },
+  "grades": {
+    "w1-sea-ne": {
+      "score": "NE 10 @ SEA 13",
+      "closing_line": -3.0,
+      "outcome": "loss",
+      "units": -0.25,
+      "final_clv": -0.5
+    },
+    "w1-sf-la": {
+      "score": "SF 27 @ LA 7",
+      "closing_line": 3.5,
+      "outcome": "win",
+      "units": 0.2273,
+      "final_clv": 0.0
+    },
+    "b-la-sf": {
+      "score": "SF 27 @ LA 7",
+      "closing_line": -3.5,
+      "outcome": "loss",
+      "units": -0.25,
+      "final_clv": 0.5
+    },
+    "u-ne_sea": {
+      "score": "NE 10 @ SEA 13",
+      "closing_line": 44.5,
+      "outcome": "win",
+      "units": 0.0455,
+      "final_clv": 0.0
+    },
+    "u-sf_la": {
+      "score": "SF 27 @ LA 7",
+      "closing_line": 47.5,
+      "outcome": "win",
+      "units": 0.0455,
+      "final_clv": 1.0
+    },
+    "s-ne_sea-u445": {
+      "score": "NE 10 @ SEA 13",
+      "closing_line": 44.5,
+      "outcome": "win",
+      "units": 0.2232,
+      "final_clv": 0.0
+    },
+    "s-ne-plus35": {
+      "score": "NE 10 @ SEA 13",
+      "closing_line": 3.0,
+      "outcome": "no bet",
+      "units": 0.0
+    }
+  }
+}

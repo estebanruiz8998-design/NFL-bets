@@ -10,6 +10,10 @@ HERE = Path(__file__).resolve().parent
 
 def main() -> None:
     state = json.loads((HERE / "state.json").read_text())
+    grades_path = HERE / "grades.json"
+    if grades_path.exists():
+        g = json.loads(grades_path.read_text())
+        state["grades"], state["grades_meta"] = g["grades"], g["meta"]
     tpl = (HERE / "template.html").read_text()
     assert tpl.count("/*__STATE__*/") == 1
     (HERE / "index.html").write_text(

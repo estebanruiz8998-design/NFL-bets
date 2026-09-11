@@ -61,6 +61,12 @@
   .chipst.waiting { background: var(--amber-soft); color: var(--amber); }
   .chipst.watch { background: var(--gray-soft); color: var(--gray); }
   .chipst.declined { background: var(--neg-soft); color: var(--neg); }
+  .chipst.expired { background: var(--gray-soft); color: var(--gray); }
+  .res { font: 800 11px var(--mono); padding: 2px 7px; border-radius: 6px; }
+  .res.win { background: var(--accent-soft); color: var(--accent); }
+  .res.loss { background: var(--neg-soft); color: var(--neg); }
+  .res.push { background: var(--gray-soft); color: var(--gray); }
+  .res.nobet { color: var(--ink3); font-weight: 600; }
   .chart { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px 12px; margin: 22px 0; }
   .chart h3 { margin: 0 0 2px; font-size: 15px; }
   .chart .note { font-size: 12.5px; color: var(--ink3); margin: 0 0 12px; }
@@ -88,7 +94,7 @@
 </header>
 
 <div class="wrap">
-  <div class="banner">PAPER MONEY ONLY — this is a live verification of the July slip, not real bets. Verdict lands at kickoff, Sept 9.</div>
+  <div class="banner">PAPER MONEY ONLY — a live verification of the July slip and the Sept 8 final slip, not real bets. Week 1 grading is in progress; the final verdict lands after Monday night, Sept 14.</div>
 
   <p class="eyebrow">Live experiment &middot; entered July 18, 2026 &middot; updated twice weekly</p>
   <h2>Does the slip beat the market before kickoff?</h2>
@@ -112,7 +118,7 @@
 
   <h3 class="sec">Game positions <span class="note">— reference book: nflverse consensus; conditions auto-enter when met</span></h3>
   <div class="table-scroll"><table class="data">
-    <thead><tr><th>Arm</th><th>Position</th><th>Status</th><th>Entry</th><th>Now</th><th>CLV (pts)</th><th>Stake</th><th>Note</th></tr></thead>
+    <thead><tr><th>Arm</th><th>Position</th><th>Status</th><th>Entry</th><th>Now / close</th><th>CLV (pts)</th><th>Result</th><th>Stake</th><th>Note</th></tr></thead>
     <tbody id="games-body"></tbody>
   </table></div>
 
@@ -152,7 +158,7 @@ function tickCountdown() {
   const kick = new Date("2026-09-10T00:20:00Z");
   const ms = kick - new Date();
   const el = document.getElementById("countdown");
-  if (ms <= 0) { el.innerHTML = "<b>Season is live — final grading in progress</b>"; return; }
+  if (ms <= 0) { const m = (STATE.grades_meta || {}); el.innerHTML = `Season live — <b>${m.week1_games_final ?? 0}/${m.week1_games ?? 16}</b> Week 1 games final${m.final ? " · verdict FINAL" : ""}`; return; }
   const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
   el.innerHTML = `VERDICT AT KICKOFF in <b>${d}d ${h}h</b>`;
 }
@@ -162,7 +168,9 @@ document.getElementById("gen-date").textContent = STATE.generated;
 const POS = STATE.ledger.positions;
 const HIST = STATE.history || {};
 const ARMS = STATE.ledger.arms || {};
-const ARM_LETTER = { slip: "A", contra: "B", unders: "U", model: "M", futures2: "F" };
+const ARM_LETTER = { slip: "A", contra: "B", unders: "U", model: "M", futures2: "F", final: "S" };
+const GRADES = STATE.grades || {};
+const resCell = id => { const g = GRADES[id]; if (!g) return `<span class="res nobet">—</span>`; if (g.outcome === "no bet") return `<span class="res nobet" title="${g.score}">no bet</span>`; return `<span class="res ${g.outcome}" title="${g.score} · close ${g.closing_line}">${g.outcome.toUpperCase()}${g.units ? " " + (g.units > 0 ? "+" : "") + g.units.toFixed(2) + "u" : ""}</span>`; };
 const armChip = a => `<span style="font:700 11px var(--mono);color:var(--ink3)">${ARM_LETTER[a] || a}</span>`;
 const latest = id => { const h = HIST[id] || []; return h.length ? h[h.length - 1] : null; };
 const fmtLine = (v, type, side) => {
@@ -204,6 +212,7 @@ const clvCell = v => {
     <div class="stat"><div class="k">Game-line CLV</div><div class="v"><span class="${cls(port)}">${port > 0 ? "+" : ""}${port.toFixed(2)}</span><small> pts (stake-wtd)</small></div></div>
     <div class="stat"><div class="k">Futures CLV</div><div class="v">${fport == null ? "—" : `<span class="${cls(fport)}">${fport > 0 ? "+" : ""}${fport.toFixed(1)}</span>`}<small> prob pp</small></div></div>
     <div class="stat"><div class="k">Snapshots</div><div class="v">${snaps}<small> since Jul 18</small></div></div>
+    <div class="stat"><div class="k">Results so far</div><div class="v">${(() => { const gs = Object.values(GRADES).filter(g => g.outcome !== "no bet"); const w = gs.filter(g => g.outcome === "win").length, l = gs.filter(g => g.outcome === "loss").length, pu = gs.filter(g => g.outcome === "push").length; const u = gs.reduce((s, g) => s + (g.units || 0), 0); return gs.length ? `${w}-${l}-${pu}<small> · <span class="${cls(u)}">${u > 0 ? "+" : ""}${u.toFixed(2)}u</span></small>` : "—<small> none final</small>"; })()}</div></div>
     <div class="stat"><div class="k">Waiting on price</div><div class="v">${POS.filter(p => p.status === "waiting").length}<small> + ${POS.filter(p => p.status === "watch").length} watch</small></div></div>`;
 })();
 
@@ -243,7 +252,7 @@ const clvCell = v => {
 
 // arms summary
 (function armsTable() {
-  const order = ["slip", "contra", "unders", "model", "futures2"];
+  const order = ["slip", "contra", "unders", "model", "futures2", "final"];
   document.getElementById("arms-body").innerHTML = order.filter(a => POS.some(p => p.arm === a)).map(a => {
     const ps = POS.filter(p => p.arm === a);
     let wpts = 0, wspts = 0, wpp = 0, wspp = 0;
@@ -257,6 +266,8 @@ const clvCell = v => {
     if (wspts) parts.push(`${clvCell((wpts / wspts).toFixed(2))} pts`);
     if (wspp) parts.push(`${clvCell((wpp / wspp).toFixed(1))} pp`);
     const stake = ps.reduce((s, p) => s + p.stake, 0);
+    const gs = ps.map(p => GRADES[p.id]).filter(g => g && g.outcome !== "no bet");
+    if (gs.length) { const w = gs.filter(g => g.outcome === "win").length, lo = gs.filter(g => g.outcome === "loss").length, pu = gs.filter(g => g.outcome === "push").length; const u = gs.reduce((s, g) => s + (g.units || 0), 0); parts.push(`${w}-${lo}-${pu} ${clvCell(u.toFixed(2))}u`); }
     return `<tr>
       <td class="num"><b>${ARM_LETTER[a]}</b></td>
       <td class="wrap" style="max-width:420px">${(ARMS[a] || a).replace(/^[A-Z] — /, "")}</td>
@@ -278,6 +289,7 @@ document.getElementById("games-body").innerHTML = POS.filter(isGame).map(p => {
     <td class="num">${p.entry_line != null ? fmtLine(p.entry_line, p.type, p.side) : "—"}</td>
     <td class="num">${l ? fmtLine(l.current_line, p.type, p.side) : "—"}</td>
     <td class="num">${l ? clvCell(l.clv_points) : "—"}</td>
+    <td class="num">${resCell(p.id)}</td>
     <td class="num">${p.stake}u</td>
     <td class="wrap" style="color:var(--ink3);font-size:12.5px">${p.condition_note || (p.entry_date ? "entered " + p.entry_date : "")}</td>
   </tr>`;

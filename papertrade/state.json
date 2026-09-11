@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-08",
+  "generated": "2026-09-11",
   "ledger": {
     "created": "2026-07-18",
     "note": "Paper trade of the July 2026 slip. No real money. Entry prices are the slip's quoted prices; nflverse is the reference book for game lines. Conditional positions auto-enter when their line condition is met at a snapshot; 'watch' positions require a manual decision.",
@@ -492,6 +492,68 @@
         "status": "entered",
         "entry_date": "2026-07-18",
         "book": "BetMGM"
+      },
+      {
+        "id": "s-ne_sea-u445",
+        "arm": "final",
+        "type": "total",
+        "bet": "NE@SEA Under 44.5 (final slip headline; entered at the feed's \u2212112)",
+        "game_id": "2026_01_NE_SEA",
+        "side": "under",
+        "entry_line": 44.5,
+        "entry_odds": -112,
+        "stake": 0.25,
+        "status": "entered",
+        "entry_date": "2026-09-08"
+      },
+      {
+        "id": "s-ne-plus35",
+        "arm": "final",
+        "type": "spread",
+        "bet": "Patriots +3.5 (final slip; only at \u2212115 or better, or +3 at +100 or better)",
+        "game_id": "2026_01_NE_SEA",
+        "side": "NE",
+        "stake": 0.25,
+        "status": "declined",
+        "condition": "spread_line >= 3.5 or away_spread_odds >= 100",
+        "condition_note": "declined at the reference feed: NE +3 was \u2212102, two cents short of the +100 rule; DraftKings' reported +3.5 \u2212115 could not be verified. At that price it would have won (SEA by 3)."
+      },
+      {
+        "id": "s-buf_hou-u445",
+        "arm": "final",
+        "type": "total",
+        "bet": "BUF@HOU Under 44.5 (final slip; entered at \u2212110)",
+        "game_id": "2026_01_BUF_HOU",
+        "side": "under",
+        "entry_line": 44.5,
+        "entry_odds": -110,
+        "stake": 0.25,
+        "status": "entered",
+        "entry_date": "2026-09-08"
+      },
+      {
+        "id": "s-cle-plus9",
+        "arm": "final",
+        "type": "spread",
+        "bet": "Browns +9 (final slip; fill-if-found at \u2212110 or better)",
+        "game_id": "2026_01_CLE_JAX",
+        "side": "CLE",
+        "stake": 0.25,
+        "status": "waiting",
+        "condition": "spread_line >= 9.0 and away_spread_odds >= -110",
+        "condition_note": "fill-if-found: needs CLE +9 at \u2212110 or better at the reference feed before kickoff; +8.5 is a no-bet"
+      },
+      {
+        "id": "s-den-plus3",
+        "arm": "final",
+        "type": "spread",
+        "bet": "Broncos +3 (final slip; fill-if-found at \u2212110 or better)",
+        "game_id": "2026_01_DEN_KC",
+        "side": "DEN",
+        "stake": 0.25,
+        "status": "waiting",
+        "condition": "spread_line >= 3.0 and away_spread_odds >= -110",
+        "condition_note": "fill-if-found: needs DEN +3 at \u2212110 or better at the reference feed before kickoff; the feed's +3 was \u2212120 on Sept 8 and the line is now KC \u22122.5"
       }
     ],
     "arms": {
@@ -499,7 +561,8 @@
       "contra": "B \u2014 backtest-informed contrarian: the sides the 2002-2025 patterns leaned toward, incl. two paired opposites of Arm A",
       "unders": "U \u2014 Week 1 unders basket: the only baseline with a stable positive lean (54.1% since 2002)",
       "model": "M \u2014 model-edge tracker: biggest Elo/market gaps; tests whether the market moves toward the model",
-      "futures2": "F \u2014 tier-2 futures & props: win-total and award theses from the July research"
+      "futures2": "F \u2014 tier-2 futures & props: win-total and award theses from the July research",
+      "final": "S \u2014 the Sept 8 final slip: five price-rule tickets from the 55-agent review, entered only where the reference feed met the stated price condition"
     }
   },
   "history": {
@@ -650,6 +713,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "fut-cin-north",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "185",
+        "clv_points": "",
+        "clv_prob_pp": "1.75"
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "fut-cin-north",
         "status": "entered",
         "current_line": "",
@@ -811,6 +883,15 @@
         "current_odds": "125",
         "clv_points": "",
         "clv_prob_pp": "-1.01"
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "fut-ne-east",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "125",
+        "clv_points": "",
+        "clv_prob_pp": "-1.01"
       }
     ],
     "fut-buf-sb": [
@@ -960,6 +1041,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "fut-buf-sb",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "1000",
+        "clv_points": "",
+        "clv_prob_pp": "0.0"
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "fut-buf-sb",
         "status": "entered",
         "current_line": "",
@@ -1121,6 +1211,15 @@
         "current_odds": "850",
         "clv_points": "",
         "clv_prob_pp": "0.0"
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "fut-ne-afc",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "850",
+        "clv_points": "",
+        "clv_prob_pp": "0.0"
       }
     ],
     "fut-chi-north": [
@@ -1270,6 +1369,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "fut-chi-north",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "325",
+        "clv_points": "",
+        "clv_prob_pp": "-0.28"
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "fut-chi-north",
         "status": "entered",
         "current_line": "",
@@ -1431,6 +1539,15 @@
         "current_odds": "225",
         "clv_points": "",
         "clv_prob_pp": "0.0"
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "fut-den-west",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "225",
+        "clv_points": "",
+        "clv_prob_pp": "0.0"
       }
     ],
     "fut-chi-sb": [
@@ -1580,6 +1697,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "fut-chi-sb",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "2700",
+        "clv_points": "",
+        "clv_prob_pp": "-0.27"
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "fut-chi-sb",
         "status": "entered",
         "current_line": "",
@@ -1741,6 +1867,15 @@
         "current_odds": "3500",
         "clv_points": "",
         "clv_prob_pp": "0.82"
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "fut-min-sb",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "3500",
+        "clv_points": "",
+        "clv_prob_pp": "0.82"
       }
     ],
     "w1-den-kc": [
@@ -1896,6 +2031,15 @@
         "current_odds": "",
         "clv_points": "-0.5",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "w1-den-kc",
+        "status": "entered",
+        "current_line": "2.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
       }
     ],
     "w1-sea-ne": [
@@ -2045,6 +2189,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "w1-sea-ne",
+        "status": "entered",
+        "current_line": "-3.0",
+        "current_odds": "",
+        "clv_points": "-0.5",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "w1-sea-ne",
         "status": "entered",
         "current_line": "-3.0",
@@ -2206,6 +2359,15 @@
         "current_odds": "",
         "clv_points": "0.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "lean-ten-over",
+        "status": "entered",
+        "current_line": "38.5",
+        "current_odds": "",
+        "clv_points": "-1.0",
+        "clv_prob_pp": ""
       }
     ],
     "lean-mia-kc": [
@@ -2355,6 +2517,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "lean-mia-kc",
+        "status": "entered",
+        "current_line": "7.5",
+        "current_odds": "",
+        "clv_points": "-0.5",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "lean-mia-kc",
         "status": "entered",
         "current_line": "7.5",
@@ -2516,6 +2687,15 @@
         "current_odds": "",
         "clv_points": "",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "w1-jax-cle",
+        "status": "waiting",
+        "current_line": "-8.5",
+        "current_odds": "",
+        "clv_points": "",
+        "clv_prob_pp": ""
       }
     ],
     "w1-sf-la": [
@@ -2665,6 +2845,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "w1-sf-la",
+        "status": "entered",
+        "current_line": "3.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "w1-sf-la",
         "status": "entered",
         "current_line": "3.5",
@@ -2826,6 +3015,15 @@
         "current_odds": "",
         "clv_points": "1.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "w1-phi-was",
+        "status": "entered",
+        "current_line": "-6.0",
+        "current_odds": "",
+        "clv_points": "1.5",
+        "clv_prob_pp": ""
       }
     ],
     "w1-min-gb": [
@@ -2981,6 +3179,15 @@
         "current_odds": "",
         "clv_points": "",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "w1-min-gb",
+        "status": "declined",
+        "current_line": "-1.5",
+        "current_odds": "",
+        "clv_points": "",
+        "clv_prob_pp": ""
       }
     ],
     "b-no-det": [
@@ -3121,6 +3328,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "b-no-det",
+        "status": "entered",
+        "current_line": "7.0",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "b-no-det",
         "status": "entered",
         "current_line": "7.0",
@@ -3273,6 +3489,15 @@
         "current_odds": "",
         "clv_points": "0.5",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "b-kc-den",
+        "status": "entered",
+        "current_line": "-2.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
       }
     ],
     "b-la-sf": [
@@ -3413,6 +3638,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "b-la-sf",
+        "status": "entered",
+        "current_line": "-3.5",
+        "current_odds": "",
+        "clv_points": "0.5",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "b-la-sf",
         "status": "entered",
         "current_line": "-3.5",
@@ -3565,6 +3799,15 @@
         "current_odds": "",
         "clv_points": "0.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-ne_sea",
+        "status": "entered",
+        "current_line": "44.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-sf_la": [
@@ -3711,6 +3954,15 @@
         "current_odds": "",
         "clv_points": "0.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-sf_la",
+        "status": "entered",
+        "current_line": "47.5",
+        "current_odds": "",
+        "clv_points": "1.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-chi_car": [
@@ -3851,6 +4103,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "u-chi_car",
+        "status": "entered",
+        "current_line": "47.5",
+        "current_odds": "",
+        "clv_points": "-3.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "u-chi_car",
         "status": "entered",
         "current_line": "47.5",
@@ -4003,6 +4264,15 @@
         "current_odds": "",
         "clv_points": "0.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-tb_cin",
+        "status": "entered",
+        "current_line": "50.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-no_det": [
@@ -4143,6 +4413,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "u-no_det",
+        "status": "entered",
+        "current_line": "49.5",
+        "current_odds": "",
+        "clv_points": "-1.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "u-no_det",
         "status": "entered",
         "current_line": "49.5",
@@ -4295,6 +4574,15 @@
         "current_odds": "",
         "clv_points": "0.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-buf_hou",
+        "status": "entered",
+        "current_line": "44.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-bal_ind": [
@@ -4435,6 +4723,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "u-bal_ind",
+        "status": "entered",
+        "current_line": "47.5",
+        "current_odds": "",
+        "clv_points": "2.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "u-bal_ind",
         "status": "entered",
         "current_line": "47.5",
@@ -4587,6 +4884,15 @@
         "current_odds": "",
         "clv_points": "0.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-cle_jax",
+        "status": "entered",
+        "current_line": "39.5",
+        "current_odds": "",
+        "clv_points": "1.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-atl_pit": [
@@ -4733,6 +5039,15 @@
         "current_odds": "",
         "clv_points": "-1.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-atl_pit",
+        "status": "entered",
+        "current_line": "41.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-ari_lac": [
@@ -4873,6 +5188,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "u-ari_lac",
+        "status": "entered",
+        "current_line": "47.5",
+        "current_odds": "",
+        "clv_points": "-2.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "u-ari_lac",
         "status": "entered",
         "current_line": "47.5",
@@ -5025,6 +5349,15 @@
         "current_odds": "",
         "clv_points": "0.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-mia_lv",
+        "status": "entered",
+        "current_line": "40.5",
+        "current_odds": "",
+        "clv_points": "1.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-gb_min": [
@@ -5165,6 +5498,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "u-gb_min",
+        "status": "entered",
+        "current_line": "46.5",
+        "current_odds": "",
+        "clv_points": "-2.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "u-gb_min",
         "status": "entered",
         "current_line": "46.5",
@@ -5317,6 +5659,15 @@
         "current_odds": "",
         "clv_points": "2.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-was_phi",
+        "status": "entered",
+        "current_line": "44.5",
+        "current_odds": "",
+        "clv_points": "2.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-dal_nyg": [
@@ -5463,6 +5814,15 @@
         "current_odds": "",
         "clv_points": "0.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "u-dal_nyg",
+        "status": "entered",
+        "current_line": "47.5",
+        "current_odds": "",
+        "clv_points": "1.0",
+        "clv_prob_pp": ""
       }
     ],
     "u-den_kc": [
@@ -5603,6 +5963,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "u-den_kc",
+        "status": "entered",
+        "current_line": "43.5",
+        "current_odds": "",
+        "clv_points": "-1.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "u-den_kc",
         "status": "entered",
         "current_line": "43.5",
@@ -5755,6 +6124,15 @@
         "current_odds": "",
         "clv_points": "1.0",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "m-jax-phi",
+        "status": "entered",
+        "current_line": "1.5",
+        "current_odds": "",
+        "clv_points": "1.0",
+        "clv_prob_pp": ""
       }
     ],
     "m-den-la": [
@@ -5900,6 +6278,15 @@
         "current_line": "3.0",
         "current_odds": "",
         "clv_points": "0.0",
+        "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "m-den-la",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "",
+        "clv_points": "",
         "clv_prob_pp": ""
       }
     ],
@@ -6047,6 +6434,15 @@
         "current_odds": "",
         "clv_points": "0.5",
         "clv_prob_pp": ""
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "m-ari-lac",
+        "status": "entered",
+        "current_line": "9.5",
+        "current_odds": "",
+        "clv_points": "1.0",
+        "clv_prob_pp": ""
       }
     ],
     "f2-mia-u45": [
@@ -6187,6 +6583,15 @@
       },
       {
         "snap_date": "2026-09-08",
+        "position_id": "f2-mia-u45",
+        "status": "entered",
+        "current_line": "4.5",
+        "current_odds": "-130",
+        "clv_points": "0.0",
+        "clv_prob_pp": "0.0"
+      },
+      {
+        "snap_date": "2026-09-11",
         "position_id": "f2-mia-u45",
         "status": "entered",
         "current_line": "4.5",
@@ -6339,6 +6744,15 @@
         "current_odds": "-140",
         "clv_points": "0.0",
         "clv_prob_pp": "8.33"
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "f2-lar-o115",
+        "status": "entered",
+        "current_line": "11.5",
+        "current_odds": "-125",
+        "clv_points": "0.0",
+        "clv_prob_pp": "5.56"
       }
     ],
     "f2-maye-mvp": [
@@ -6485,6 +6899,15 @@
         "current_odds": "1000",
         "clv_points": "",
         "clv_prob_pp": "0.76"
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "f2-maye-mvp",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "1800",
+        "clv_points": "",
+        "clv_prob_pp": "-3.07"
       }
     ],
     "f2-jsn-opoy": [
@@ -6631,6 +7054,70 @@
         "current_odds": "1800",
         "clv_points": "",
         "clv_prob_pp": "-0.99"
+      },
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "f2-jsn-opoy",
+        "status": "entered",
+        "current_line": "",
+        "current_odds": "1800",
+        "clv_points": "",
+        "clv_prob_pp": "-0.99"
+      }
+    ],
+    "s-ne_sea-u445": [
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "s-ne_sea-u445",
+        "status": "entered",
+        "current_line": "44.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
+      }
+    ],
+    "s-ne-plus35": [
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "s-ne-plus35",
+        "status": "declined",
+        "current_line": "3.0",
+        "current_odds": "",
+        "clv_points": "",
+        "clv_prob_pp": ""
+      }
+    ],
+    "s-buf_hou-u445": [
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "s-buf_hou-u445",
+        "status": "entered",
+        "current_line": "44.5",
+        "current_odds": "",
+        "clv_points": "0.0",
+        "clv_prob_pp": ""
+      }
+    ],
+    "s-cle-plus9": [
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "s-cle-plus9",
+        "status": "waiting",
+        "current_line": "8.5",
+        "current_odds": "",
+        "clv_points": "",
+        "clv_prob_pp": ""
+      }
+    ],
+    "s-den-plus3": [
+      {
+        "snap_date": "2026-09-11",
+        "position_id": "s-den-plus3",
+        "status": "waiting",
+        "current_line": "2.5",
+        "current_odds": "",
+        "clv_points": "",
+        "clv_prob_pp": ""
       }
     ]
   },
@@ -6650,6 +7137,7 @@
     "2026-08-28",
     "2026-09-01",
     "2026-09-04",
-    "2026-09-08"
+    "2026-09-08",
+    "2026-09-11"
   ]
 }

@@ -96,9 +96,17 @@ def main() -> None:
             if math.isnan(ref):
                 rows.append(row)
                 continue
-            # auto-enter conditionals when the reference line meets the rule
+            played = not math.isnan(float(game.result))
+            # a conditional that never met its price before kickoff is a no-bet
+            if pos["status"] == "waiting" and played:
+                pos["status"] = "expired"
+                changed = True
+            # auto-enter conditionals when the reference line (and posted price) meets the rule
             if pos["status"] == "waiting":
-                ok = eval(pos["condition"], {"__builtins__": {}}, {"spread_line": spread, "total_line": total})
+                ctx = {"spread_line": spread, "total_line": total}
+                for col in ("home_spread_odds", "away_spread_odds", "under_odds", "over_odds"):
+                    ctx[col] = float(game[col]) if col in game.index else float("nan")
+                ok = eval(pos["condition"], {"__builtins__": {}}, ctx)
                 if ok:
                     pos["status"] = "entered"
                     pos["entry_date"] = snap_date
